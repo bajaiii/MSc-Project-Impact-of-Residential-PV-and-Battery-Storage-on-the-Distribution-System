@@ -1,4 +1,4 @@
-# MSc-Project: Impact of PV and Battery-Storage on Distribution System
+# MSc-Project: Impact of Residential PV and Battery-Storage on the Distribution System
 
 **Course:** MSc Future Power Networks 
 
