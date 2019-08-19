@@ -149,7 +149,7 @@ TransformerApparentPower = abs(TransformerActivePower + j*TransformerReactivePow
 
 % Preallocation of matrices for speed
 ActiveGridPower = zeros(1440,1);
-ReactiveGridPower = zeros(1440,1);
+RectiveGridPower = zeros(1440,1);
 
 % Takes only positive values of grid power (if injected into system) at
 % each time step
@@ -200,7 +200,7 @@ grid minor;
 ylabel('Circuit Losses Apparent Energy Losses (kVA hours)','fontweight','bold','FontSize',8)
 title({'Total Energy from Grid & Transformer (Active & Reactive Energy) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
 legend({'Active Energy(kWh)','Reactive Energy(kVArh)'},'location','northwest','AutoUpdate','off')
-set(gca,'XTickLabel',{'Total Energy on Transformer','Energy From Grid to System'});
+set(gca,'XTickLabel',{'Energy From Grid to System','Total Energy on Transformer'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
