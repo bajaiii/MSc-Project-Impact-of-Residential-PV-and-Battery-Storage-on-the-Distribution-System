@@ -2,16 +2,18 @@
 
 MSc Future Power Networks Final Project 
 
-Project Title: Impact of Domestic PV with Small Scale Storage Systems on the Distribution Network Operating Requirements and Performance
+**Name:** Stefan Bajai
 
-Project Description: Modelling of LV Distribution System (IEEE low-voltage test feeder network) using OpenDSS to determine steady-state operating points of the network. Load and PV profiles with 1-minute resolution are used
+**Project Title:** Impact of Domestic PV with Small Scale Storage Systems on the Distribution Network Operating Requirements and Performance
+
+**Project Description:** 3-phase Modelling of UK LV Distribution System (IEEE low-voltage test feeder network) using OpenDSS to determine steady-state operating points of the network. Load and PV profiles with 1-minute resolution are used
 
 Developed and tested on **MATLAB R2018b** & **OpenDSS Version 8.5.9.1 (64-Bit)**
 
 **While @ Imperial College London, 
  Department of Electrical & Electronics Engineering**
 
-Date: August 2019
+**Date:** August 2019
 
 ## Replicating Simulations
 
@@ -21,7 +23,7 @@ Date: August 2019
 
 **Step 3:** Change the scenario you wish to simulate in the *'Master_LV_IEEE.dss'* using OpenDSS. This can be done by commenting out definitions of PV elements and load shapes in the code. The scenarios for each simulation are described in the report. 
 
-**Step 4:** Run the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' file in matlab and display the results. 
+**Step 4:** Run the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' file in matlab and display the solutions to the power flow study. 
 
 
 
