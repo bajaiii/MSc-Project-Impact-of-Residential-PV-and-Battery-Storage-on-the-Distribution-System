@@ -1,12 +1,12 @@
 # MSc-Project: Impact of PV and Battery-Storage on Distribution System
 
-MSc Future Power Networks Final Project 
+**Course:** MSc Future Power Networks 
 
 **Name:** Stefan Bajai
 
 **Project Title:** Impact of Domestic PV with Small Scale Storage Systems on the Distribution Network Operating Requirements and Performance
 
-**Project Description:** 3-phase Modelling of UK LV Distribution System (IEEE low-voltage test feeder network) using OpenDSS to determine steady-state operating points of the network. Load and PV profiles with 1-minute resolution are used
+**Project Description:** 3-phase Modelling of UK LV Distribution System (IEEE low-voltage test feeder network) using OpenDSS to determine steady-state operating points of the network. Load and PV profiles with 1-minute resolution are used to run a quasi-static load flow simulation solving at each time step for each phase of the distribution network.
 
 Developed and tested on **MATLAB R2018b** & **OpenDSS Version 8.5.9.1 (64-Bit)**
 
