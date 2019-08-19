@@ -47,7 +47,7 @@ DSSText.command='compile (C:\Users\bajai\Documents\University\Imperial College L
 DSSCircuit = DSSObj.ActiveCircuit;
 DSSSolution = DSSCircuit.Solution;
 
-DSSText.command= 'set mode=yearly number= 1440 stepsize=1m'    % one day simulation 
+DSSText.command= 'set mode=yearly number= 1440 stepsize=1m';    % one day simulation 
 
 %DSSText.command= 'set miniterations = 1'    %  Sets minimum iterations to solve at
 %each time step - Default is 2 but reduced to 1 in time sequential study to
@@ -69,6 +69,8 @@ PVInjectedPowers = zeros(1440,55);
 ActiveLoadPowers = zeros(1440,55);
 ReactiveLoadPowers = zeros(1440,55);
 LineLosses = zeros(1440,2);
+TransformerPower = zeros(1440,16);
+ElementLosses = zeros(1440,2038);
 
 % Loop to extract power flow solution at each time step
     for i=1:1440
@@ -128,15 +130,17 @@ StackedBarLossesFigure = figure('Name', ['Stacked Bar Chart Losses ', sprintf(Sc
 StackedBarLosses = bar(StackedTotalLossesPower,'stacked','LineWidth',2);
 set(StackedBarLosses(1), 'FaceColor', Colour1,'LineWidth',2,'EdgeColor','none');
 set(StackedBarLosses(2), 'FaceColor', Colour2,'LineWidth',2,'EdgeColor','none');
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.05,InSet(2), 1-InSet(1)-InSet(3)-0.07, 1-InSet(2)-InSet(4)-0.1]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
-ylabel('Circuit Losses Apparent Energy Losses (kVA hours)','fontweight','bold','FontSize',8)
-title({'Total Distribution Network Energy Losses (Active & Reactive Energy Losses) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+ylabel('Apparent Energy Losses (kVA hours)','fontweight','bold','FontSize',8)
+title({'Total Transformer & Line Energy Losses - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
 legend({'Active Energy Losses (kWh)','Reactive Energy Losses (kVArh)'},'location','northwest','AutoUpdate','off')
-set(gca,'XTickLabel',{'Total Line Losses','Total Transformer Losses', 'Total Losses'});
+set(gca,'XTickLabel',{'All Lines','Transformer', 'Total Losses'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 %% Organises Transformer Powers
@@ -185,27 +189,29 @@ TotalReactiveGridEnergy = abs(sum(ReactiveGridPower/60,'all'));
 % TotalReactiveLossesPlot = TotalReactiveLineLosses + TotalReactiveTransformerLosses;
 
 %Sets up data for stacked plot
-StackedTotalLossesPower = [TotalActiveTransformerEnergy,        TotalReactiveTransformerEnergy; 
+StackedTotalEnergy = [TotalActiveTransformerEnergy,        TotalReactiveTransformerEnergy; 
                            TotalActiveGridEnergy,               TotalReactiveGridEnergy;];
                        
 StackedBarENERGYFigure = figure('Name', ['Stacked Bar Chart Energy ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-StackedBarLosses = bar(StackedTotalLossesPower,'stacked','LineWidth',2);
-set(StackedBarLosses(1), 'FaceColor', Colour1,'LineWidth',2,'EdgeColor','none');
-set(StackedBarLosses(2), 'FaceColor', Colour2,'LineWidth',2,'EdgeColor','none');
+StackedBarEnergy = bar(StackedTotalEnergy,'stacked','LineWidth',2);
+set(StackedBarEnergy(1), 'FaceColor', Colour1,'LineWidth',2,'EdgeColor','none');
+set(StackedBarEnergy(2), 'FaceColor', Colour2,'LineWidth',2,'EdgeColor','none');
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.05,InSet(2), 1-InSet(1)-InSet(3)-0.07, 1-InSet(2)-InSet(4)-0.1]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
-ylabel('Circuit Losses Apparent Energy Losses (kVA hours)','fontweight','bold','FontSize',8)
-title({'Total Energy from Grid & Transformer (Active & Reactive Energy) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Energy(kWh)','Reactive Energy(kVArh)'},'location','northwest','AutoUpdate','off')
-set(gca,'XTickLabel',{'Total Energy on Transformer','Energy From Grid to System'});
+ylabel('Apparent Energy (kVA hours)','fontweight','bold','FontSize',8)
+title({'Energy from Grid & on Transformer - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+legend({'Active Energy (kWh)','Reactive Energy (kVArh)'},'location','northeast','AutoUpdate','off')
+set(gca,'XTickLabel',{'Transformer','Grid'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
 %% Gets the phase to ground voltage magnitudes at every load
-NumberofCircuitElements = DSSCircuit.NumCktElements % Counts number of elements in circuit
+NumberofCircuitElements = DSSCircuit.NumCktElements; % Counts number of elements in circuit
 
 Load_Information = readtable('IEEE_LV_TEST_FEEDER_Load_Info.csv');
 Loads_Connected_to_Bus_No = Load_Information(2,2:end);
@@ -236,7 +242,7 @@ V3XCoor = zeros(1440,907);
 V3YCoor = zeros(1440,907);
 
 %Sorts Complex Bus Voltages
-[CMPLXROWS CMPLXCOLS] = size(ComplexVolts);
+[CMPLXROWS, CMPLXCOLS] = size(ComplexVolts);
 count =1; %should be 907 
 for i=1:6:CMPLXCOLS
 
@@ -278,19 +284,22 @@ Unbalance = (Numerator./Denominator)*100; %definition of Voltage Unbalance accor
 %-%-%-%-%-%-----Unbalance (%) at each Load Plot-----%-%-%-%-%-%
 
 % Gets size of V1 Mag Matrix
-[ROWS COLUMNS] = size(Unbalance);
+[ROWS, COLUMNS] = size(Unbalance);
 
 % Sets x and y axis
 Minutes = [(1:ROWS)/60]';
 LoadNumbers = [1:COLUMNS]';
 
 % Sets up meshgrid
-[x y] = meshgrid(Minutes,LoadNumbers);
+[x, y] = meshgrid(Minutes,LoadNumbers);
 
 %3D Surface Plot 
 UnbalancePlotFigure = figure('Name', ['Unabalance(%) at all loads (IEC 61000) ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-UnbalancePlot = surf(x,y,(Unbalance)','EdgeColor','none','LineWidth',0.1)
+UnbalancePlot = surf(x,y,(Unbalance)','EdgeColor','none','LineWidth',0.1);
 hold on 
+
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -299,7 +308,7 @@ set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XM
 colormap(jet)
 shading interp
 grid minor;
-title({'Unbalance at all Loads (IEC 61000-3-14 Definition) (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+title({'Unbalance at all Loads', '(IEC 61000-3-14 Definition) (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
 xlabel('Hour')
 xlim([0 ROWS/60])
 ylabel('Load #')
@@ -312,19 +321,23 @@ zlabel('Unbalance (%)')
 %-%-%-%-%-%-----Voltage-to-Ground Plot Phase A Vs. Loads-----%-%-%-%-%-%
 
 % Gets size of V1 Mag Matrix
-[ROWS COLUMNS] = size(V1Loads);
+[ROWS, COLUMNS] = size(V1Loads);
 
 % Sets x and y axis
 Minutes = [(1:ROWS)/60]';
 BusNumbers = [1:COLUMNS]';
 
 % Sets up meshgrid
-[x y] = meshgrid(Minutes,BusNumbers);
+[x, y] = meshgrid(Minutes,BusNumbers);
 
 %3D Surface Plot 
 V1_3D_PLOTFigure = figure('Name', ['Phase A Voltage at all Loads ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-V1_3D_PLOT = surf(x,y,(V1Loads*240)','EdgeColor','none','LineWidth',0.1)
+V1_3D_PLOT = surf(x,y,(V1Loads*240)','EdgeColor','none','LineWidth',0.1);
 hold on 
+
+view(-38,10)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -332,7 +345,45 @@ set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XM
 colormap(jet)
 shading interp
 grid minor;
-title({'Phase A Voltage-to-Ground Magnitude at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+title({'Phase A Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+xlabel('Hour')
+xlim([0 ROWS/60])
+ylabel('Load #')
+ylim([0 COLUMNS])
+zlabel('Voltage Magnitude Phase A to Ground (V)')
+% zlim([0.95 1.01])
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+
+%% X-Axis View of VA
+%-%-%-%-%-%-----Voltage-to-Ground Plot Phase A Vs. Loads-----%-%-%-%-%-%
+
+% Gets size of V1 Mag Matrix
+[ROWS, COLUMNS] = size(V1Loads);
+
+% Sets x and y axis
+Minutes = [(1:ROWS)/60]';
+BusNumbers = [1:COLUMNS]';
+
+% Sets up meshgrid
+[x, y] = meshgrid(Minutes,BusNumbers);
+
+%3D Surface Plot 
+V1_3D_PLOTFigure2 = figure('Name', ['Phase A Voltage at all Loads X-Axis', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
+V1_3D_PLOT2 = surf(x,y,(V1Loads*240)','EdgeColor','none','LineWidth',0.1);
+hold on 
+
+view(0,0)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+
+
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
+% grid on;
+colormap(jet)
+shading interp
+grid minor;
+title({'Phase A Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
 xlabel('Hour')
 xlim([0 ROWS/60])
 ylabel('Load #')
@@ -345,19 +396,23 @@ zlabel('Voltage Magnitude Phase A to Ground (V)')
 %-%-%-%-%-%-----Voltage-to-Ground Plot Phase B Vs. Loads-----%-%-%-%-%-%
 
 % Gets size of V1 Mag Matrix
-[ROWS COLUMNS] = size(V2Loads);
+[ROWS, COLUMNS] = size(V2Loads);
 
 % Sets x and y axis
 Minutes = [(1:ROWS)/60]';
 BusNumbers = [1:COLUMNS]';
 
 % Sets up meshgrid
-[x y] = meshgrid(Minutes,BusNumbers);
+[x, y] = meshgrid(Minutes,BusNumbers);
 
 %3D Surface Plot 
 V2_3D_PLOTFigure = figure('Name', ['Phase B Voltage at all Loads ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
 V2_3D_PLOT = surf(x,y,(V2Loads*240)','EdgeColor','none','LineWidth',0.1)
 hold on 
+
+view(-38,10)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -365,7 +420,7 @@ set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XM
 colormap(jet)
 shading interp
 grid minor;
-title({'Phase B Voltage-to-Ground Magnitude at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+title({'Phase B Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
 xlabel('Hour')
 xlim([0 ROWS/60])
 ylabel('Load #')
@@ -374,23 +429,28 @@ zlabel('Voltage Magnitude Phase B to Ground (V)')
 % zlim([0.95 1.01])
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 
-%%
-%-%-%-%-%-%-----Voltage-to-Ground Plot Phase C Vs. Loads-----%-%-%-%-%-%
+%% X-Axis View of VB
+%-%-%-%-%-%-----Voltage-to-Ground Plot Phase B Vs. Loads-----%-%-%-%-%-%
 
-% Gets size of V1 Mag Matrix
-[ROWS COLUMNS] = size(V3Loads);
+% Gets size of V2 Mag Matrix
+[ROWS, COLUMNS] = size(V2Loads);
 
 % Sets x and y axis
 Minutes = [(1:ROWS)/60]';
 BusNumbers = [1:COLUMNS]';
 
 % Sets up meshgrid
-[x y] = meshgrid(Minutes,BusNumbers);
+[x, y] = meshgrid(Minutes,BusNumbers);
 
 %3D Surface Plot 
-V3_3D_PLOTFigure = figure('Name', ['Phase C Voltage at all Loads ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-V3_3D_PLOT = surf(x,y,(V3Loads*240)','EdgeColor','none','LineWidth',0.1)
+V2_3D_PLOTFigure2 = figure('Name', ['Phase B Voltage at all Loads X-Axis', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
+V2_3D_PLOT2 = surf(x,y,(V2Loads*240)','EdgeColor','none','LineWidth',0.1);
 hold on 
+
+view(0,0)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -398,7 +458,43 @@ set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XM
 colormap(jet)
 shading interp
 grid minor;
-title({'Phase C Voltage-to-Ground Magnitude at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+title({'Phase B Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+xlabel('Hour')
+xlim([0 ROWS/60])
+ylabel('Load #')
+ylim([0 COLUMNS])
+zlabel('Voltage Magnitude Phase B to Ground (V)')
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+
+%%
+%-%-%-%-%-%-----Voltage-to-Ground Plot Phase C Vs. Loads-----%-%-%-%-%-%
+
+% Gets size of V1 Mag Matrix
+[ROWS, COLUMNS] = size(V3Loads);
+
+% Sets x and y axis
+Minutes = [(1:ROWS)/60]';
+BusNumbers = [1:COLUMNS]';
+
+% Sets up meshgrid
+[x, y] = meshgrid(Minutes,BusNumbers);
+
+%3D Surface Plot 
+V3_3D_PLOTFigure = figure('Name', ['Phase C Voltage at all Loads ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
+V3_3D_PLOT = surf(x,y,(V3Loads*240)','EdgeColor','none','LineWidth',0.1);
+hold on 
+
+view(-38,10)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
+
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
+% grid on;
+colormap(jet)
+shading interp
+grid minor;
+title({'Phase C Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
 xlabel('Hour')
 xlim([0 ROWS/60])
 ylabel('Load #')
@@ -407,6 +503,42 @@ zlabel('Voltage Magnitude Phase C to Ground (V)')
 % zlim([0.95 1.01])
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 
+%% X-Axis View of VC
+%-%-%-%-%-%-----Voltage-to-Ground Plot Phase B Vs. Loads-----%-%-%-%-%-%
+
+% Gets size of V2 Mag Matrix
+[ROWS, COLUMNS] = size(V3Loads);
+
+% Sets x and y axis
+Minutes = [(1:ROWS)/60]';
+BusNumbers = [1:COLUMNS]';
+
+% Sets up meshgrid
+[x, y] = meshgrid(Minutes,BusNumbers);
+
+%3D Surface Plot 
+V3_3D_PLOTFigure2 = figure('Name', ['Phase C Voltage at all Loads X-Axis', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
+V3_3D_PLOT2 = surf(x,y,(V3Loads*240)','EdgeColor','none','LineWidth',0.1);
+hold on 
+
+view(0,0)
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+
+
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
+% grid on;
+colormap(jet)
+shading interp
+grid minor;
+title({'Phase C Voltage-to-Ground Magnitude', 'at all Loads (1-Min Resolution)' sprintf(Scenario,ID1,ID2,ID3,Season)})
+xlabel('Hour')
+xlim([0 ROWS/60])
+ylabel('Load #')
+ylim([0 COLUMNS])
+zlabel('Voltage Magnitude Phase C to Ground (V)')
+%%--%%--%%--PLOT STYLING--%%--%%--%%
 
 %% True Transformer Loading Power Plot
 
@@ -416,25 +548,29 @@ hold on
 bar((1:ROWS)/60,TransformerApparentPower,'LineWidth',1,'Facecolor',Colour3)
 bar((1:ROWS)/60,TransformerReactivePower,'LineWidth',1,'Facecolor',Colour2)
 
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.15]);
+
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Transformer Loading (Active & Reactive Power)','fontweight','bold','FontSize',8)
+ylim([-max(TransformerApparentPower)-65 max(TransformerApparentPower)])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Transformer Loading (Active & Reactive Power) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Power(kW)','Apparent Power (kVA) (Magnitude)','Reactive Power(kVAr)'},'location','northwest','AutoUpdate','off')
+legend({'Active Power (kW)','Apparent Power (kVA) (Magnitude)','Reactive Power (kVAr)'},'location','southwest','FontSize',8,'AutoUpdate','off')
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
 %% Transformer Energy Plot
 
-[ROWS COLUMNS] = size(TransformerActivePower)
+[ROWS, COLUMNS] = size(TransformerActivePower)
 
 CumulativeTransformerEnergy_kWh =zeros(ROWS,1);
 
-
+% Stores cumulative energy over the day
 for c = 1:ROWS
     
     if c==1
@@ -447,10 +583,8 @@ for c = 1:ROWS
     
 end
 
-
-
 CumulativeEnergyFigure = figure('Name', ['Cumulative Transformer Energy ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-plot((1:ROWS)/60,CumulativeTransformerEnergy_kWh,'LineWidth',2,'color',Colour1)
+plot((1:ROWS)/60,CumulativeTransformerEnergy_kWh,'LineWidth',2,'color',Colour1);
 
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
@@ -469,6 +603,7 @@ title({'Transformer Cumulative Energy Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID
 
 TransformerEnergyTimeFig = figure('Name', ['Transformer Energy Vs. Time ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
 bar((1:ROWS)/60,abs(TransformerActivePower/60),'FaceColor',Colour1)
+
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -490,32 +625,76 @@ bar((1:ROWS)/60,TransformerLosses(:,2),'LineWidth',1,'Facecolor',Colour2)
 bar((1:ROWS)/60,LineLosses(:,2),'LineWidth',1,'Facecolor',Colour4)
 bar((1:ROWS)/60,TransformerLosses(:,1),'LineWidth',1,'Facecolor',Colour3)
 
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.15]);
+
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Transformer Losses (Active & Reactive Power)','fontweight','bold','FontSize',8)
+ylim([0 max(LineLosses(:,1))+0.7])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
-title({'Transformer & Line Losses (Active & Reactive Power) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Line Losses (kW)','Transformer Reactive Power(VAr)', 'Reactive Line Losses (kVAr)','Transformer Active Losses (kW)'},'location','northwest','AutoUpdate','off')
+title({'Transformer & Line Losses - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+legend({'Active Line Losses (kW)','Transformer Reactive Power (VAr)', 'Reactive Line Losses (kVAr)','Transformer Active Losses (kW)'},'location','northwest','AutoUpdate','off')
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
-%% Plot Exports
+%% Interactive & Regular Plot Exports
 
-% StackedBarLosses
-% V1_3D_PLOT
-% V2_3D_PLOT
-% V3_3D_PLOT
-% 
-% savefig(StackedTotalLossesPowerHandles,'Stacked_Bar_.fig')
-saveas(StackedBarLossesFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(UnbalancePlotFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V1_3D_PLOTFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V2_3D_PLOTFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V3_3D_PLOTFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(StackedBarLossesFigure, ['Stacked_Bar_Chart_Losses_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Loading_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(CumulativeEnergyFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Cumulative_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(TransformerEnergyTimeFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Energy_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Power_Losses_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
 
-% ['Scenario_' num2str(ID1) '_' num2str(ID2) '_' num2str(ID3) '_Stacked_Bar_.fig'])
+StackedBarLossesFigure.PaperUnits = 'inches';
+StackedBarLossesFigure.PaperPosition = [0 0 3 2.5];
+print(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+StackedBarENERGYFigure.PaperUnits = 'inches';
+StackedBarENERGYFigure.PaperPosition = [0 0 3 2.5];
+print(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+UnbalancePlotFigure.PaperUnits = 'inches';
+UnbalancePlotFigure.PaperPosition = [0 0 3 2.5];
+print(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V1_3D_PLOTFigure.PaperUnits = 'inches';
+V1_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+print(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V1_3D_PLOTFigure2.PaperUnits = 'inches';
+V1_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+print(V1_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V2_3D_PLOTFigure.PaperUnits = 'inches';
+V2_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+print(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V2_3D_PLOTFigure2.PaperUnits = 'inches';
+V2_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+print(V2_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V3_3D_PLOTFigure.PaperUnits = 'inches';
+V3_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+print(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+V3_3D_PLOTFigure2.PaperUnits = 'inches';
+V3_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+print(V3_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+TransformerLoadingFig.PaperUnits = 'inches';
+TransformerLoadingFig.PaperPosition = [0 0 3 2.5];
+print(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Loading_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+
+LossesFigure.PaperUnits = 'inches';
+LossesFigure.PaperPosition = [0 0 3 2.5];
+print(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Line_Losses_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
