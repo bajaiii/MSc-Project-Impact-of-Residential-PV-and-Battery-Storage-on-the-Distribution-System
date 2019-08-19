@@ -23,7 +23,7 @@ OpenDSS can be can be downloaded from: **https://sourceforge.net/p/electricdss/w
 
 **Step 2:** Copy the files/folders '*DSSStartup.m*', '*Buscoords.txt*', '*Load_Profiles*', '*Final_MSc_Thesis_Code_Stefan_Bajai.m*', and '*Master_LV_IEEE.dss*', to the same location. 
 
-**Step 3:** Change the scenario you wish to simulate in the *'Master_LV_IEEE.dss'* using OpenDSS. This can be done by commenting out definitions of PV elements and load shapes in the code. The scenarios for each simulation are described in the report. 
+**Step 3:** Change the scenario you wish to simulate in the *'Master_LV_IEEE.dss'* using OpenDSS. This can be done by commenting out definitions of PV elements and load shapes in the code. The scenarios for each simulation are described in the report. In the OpenDSS scripting language, comment lines can be added line-by-line by inserting an **'!'** at the beginning of the line or, alternatively and more appropriate in this case, is to use the block comment by inserting **'/*'** before the code you wish to comment out and **'*/'** after the code you wish to comment out. 
 
 **Step 4:** Run the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' file in matlab and display the solutions to the power flow study. 
 
