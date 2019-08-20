@@ -18,11 +18,97 @@ clc;
 close all;
 
 %% Scenario ID - Used for tracking Scenario #
+
+UserPrompt = 'What Scenario do you want Simulate? (Note: Scenarios still need to be changed manually in Master_LV_IEEE.dss file) Options are 1-10.  ';
+UserAnswer = input(UserPrompt)
+
+if UserAnswer == 1
+
 Scenario = 'Scenario 1 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 1;
-ID3 = 2;
+ID3 = 1;
 Season = 'Winter (No PV or Battery Storage)';
+
+elseif UserAnswer == 2
+    
+Scenario = 'Scenario 2 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 1;
+ID3 = 2;
+Season = 'Summer (No PV or Battery Storage)';
+
+elseif UserAnswer == 3
+        
+Scenario = 'Scenario 3 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 2;
+ID3 = 1;
+Season = 'Winter (50% PV, No Battery Storage)';
+
+elseif UserAnswer == 4
+        
+Scenario = 'Scenario 4 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 2;
+ID3 = 2;
+Season = 'Summer (50% PV, No Battery Storage)';
+
+elseif UserAnswer == 5
+        
+Scenario = 'Scenario 5 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 3;
+ID3 = 1;
+Season = 'Winter (100% PV, No Battery Storage)';
+
+elseif UserAnswer == 6
+        
+Scenario = 'Scenario 6 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 3;
+ID3 = 2;
+Season = 'Summer (100% PV, No Battery Storage)';
+
+elseif UserAnswer == 7
+        
+Scenario = 'Scenario 7 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 4;
+ID3 = 1;
+Season = 'Winter (50% PV, 50% Battery Storage)';
+
+elseif UserAnswer == 8
+        
+Scenario = 'Scenario 8 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 4;
+ID3 = 2;
+Season = 'Summer (50% PV, 50% Battery Storage)';
+
+elseif UserAnswer == 9
+        
+Scenario = 'Scenario 9 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 5;
+ID3 = 1;
+Season = 'Winter (100% PV, 100% Battery Storage)';
+
+elseif UserAnswer == 10
+        
+Scenario = 'Scenario 10 - %d.%d.%d %s';
+ID1 = 4;
+ID2 = 5;
+ID3 = 2;
+Season = 'Summer (100% PV, 100% Battery Storage)';
+
+else
+        
+ErrorMessage = 'Selection not valid. Please select a valid Scenario in integer format between 1-10.'
+
+end
+
+
 
 %%
 %   Personalised Matlab Colour Scheme
@@ -42,6 +128,113 @@ Colour10 = [1 51/255 51/255];
 
 % Compiles Master_LV_IEEE.dss file - Need to have OpenDSS installed
 DSSText.command='compile (C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\OpenDSS Script\Master_LV_IEEE.dss)';
+
+%% Development of IEEE European LV Test Feeder Circuit in OpenDSS Using the COM interface
+
+DSSText.command = 'clear';
+DSSText.command = 'Set DefaultBaseFrequency = 50';
+DSSText.command = 'New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder';
+% DSSText.command = 'set algorithm=newton';  % Changes solution method
+DSSText.command = 'Edit Vsource.Source BasekV=11 pu=1 ISC3=3000  ISC1=1500';
+DSSText.command = 'Redirect LineCodes.txt';
+
+% Defines different load shapes, PV shapes and battery shapes depending on
+% user input. User input options are from 1-10 (in integer format)
+
+if ID3 ==1
+DSSText.command = 'Redirect Winter_Load_Shapes.txt';
+elseif ID3 ==2
+DSSText.command = 'Redirect Summer_Load_Shapes.txt';
+else
+ErrorMessage = 'ID3 is not correct.Check Code.'
+end
+
+% If Scenario 3 or 7 use these PV shapes
+if (ID2 == 2 && ID3 ==1) ||(ID2 == 4 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_3_or_7_PV.txt';
+end
+
+% If Scenario 4 or 8 use these PV shapes
+if (ID2 == 2 && ID3 ==2)||(ID2 == 4 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_4_or_8_PV.txt';
+end
+
+% If Scenario 5 or 9 use these PV shape
+if (ID2 == 3 && ID3 ==1)||(ID2 == 5 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_5_or_9_PV.txt';
+end
+
+% If Scenario 6 or 10 use these PV shape
+if (ID2 == 3 && ID3 ==2)||(ID2 == 5 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_6_or_10_PV.txt';
+end
+
+if (ID2 == 4 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_7_Battery_Loadshapes.txt';
+end
+
+if (ID2 == 4 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_8_Battery_Loadshapes.txt';
+end
+
+if (ID2 == 5 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_9_Battery_Loadshapes.txt';
+end
+
+if (ID2 == 5 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_10_Battery_Loadshapes.txt';
+end
+
+DSSText.command = 'Redirect Line_Definitions.txt.'; 
+
+% Transformer definition
+DSSText.command = 'New Transformer.TR1 Buses=[SourceBus 1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y';
+
+%Load Definitions
+DSSText.command = 'Redirect LoadDefinitions.txt'; 
+
+%Used for checking TF primitive matrix calculations
+%%DSSText.command = 'dump transformer.TR1 debug ';
+
+if (ID2 == 2 && ID3 ==1) ||(ID2 == 4 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_3_or_7_PV_System_Definition_PV.txt';
+end 
+
+if (ID2 == 2 && ID3 ==2)||(ID2 == 4 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_4_or_8_PV_System_Definition_PV.txt';
+end
+
+if (ID2 == 3 && ID3 ==1)||(ID2 == 5 && ID3 ==1)
+DSSText.command = 'Redirect Scenario_5_or_9_PV_System_Definition_PV.txt';
+end
+
+if (ID2 == 3 && ID3 ==2)||(ID2 == 5 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_6_or_10_PV_System_Definition_PV.txt';
+end
+
+if (ID2 == 4 && ID3 ==1)||(ID2 == 4 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_7_or_8_Battery_System_Definition.txt';
+end
+
+if (ID2 == 5 && ID3 ==1)||(ID2 == 5 && ID3 ==2)
+DSSText.command = 'Redirect Scenario_9_or_10_Battery_System_Definition.txt';
+end
+
+DSSText.command = 'New Monitor.LINE1_PQ_vs_Time Line.LINE1 2 Mode=1 ppolar=0';
+DSSText.command = 'New Monitor.LINE1_VI_vs_Time Line.LINE1 2 Mode=0';
+
+% Sets voltage bases for system (Operational value for UK used...i.e
+% 416Three-phase)
+DSSText.command = 'Set voltagebases=[11  .416]';
+DSSText.command = 'Calcvoltagebases';
+DSSText.command = 'buscoords buscoords.txt';
+
+% DSSText.command = 'compile';
+
+%%
+
+% Compiles Master_LV_IEEE.dss file - Need to have OpenDSS installed
+% DSSText.command='compile (C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\OpenDSS Script\Master_LV_IEEE.dss)';
     
 % Set up the interface variables
 DSSCircuit = DSSObj.ActiveCircuit;
@@ -57,20 +250,20 @@ DSSText.command= 'set mode=yearly number= 1440 stepsize=1m';    % one day simula
 
 DSSText.Command = 'Set number = 1';  % sets the solve command to only solve for 1 time interval (1-minute)
 
-% Preallocation of matrices for speed
-V1 = zeros(1440,907); % (1440 minutes and 907 buses)
-V2 = zeros(1440,907);
-V3 = zeros(1440,907);
-ComplexVolts = zeros(1440,5442);
-CircuitLosses = zeros(1440,2);
-TransformerLosses = zeros(1440,2);
-GridPower = zeros(1440,2);
-PVInjectedPowers = zeros(1440,55);
-ActiveLoadPowers = zeros(1440,55);
-ReactiveLoadPowers = zeros(1440,55);
-LineLosses = zeros(1440,2);
-TransformerPower = zeros(1440,16);
-% ElementLosses = zeros(1440,2038);
+%% Preallocation of matrices for speed
+% V1 = zeros(1440,907); % (1440 minutes and 907 buses)
+% V2 = zeros(1440,907);
+% V3 = zeros(1440,907);
+% ComplexVolts = zeros(1440,5442);
+% CircuitLosses = zeros(1440,2);
+% TransformerLosses = zeros(1440,2);
+% GridPower = zeros(1440,2);
+% PVInjectedPowers = zeros(1440,55);
+% ActiveLoadPowers = zeros(1440,55);
+% ReactiveLoadPowers = zeros(1440,55);
+% LineLosses = zeros(1440,2);
+% TransformerPower = zeros(1440,16);
+
 
 % Loop to extract power flow solution at each time step
     for i=1:1440
@@ -94,17 +287,21 @@ TransformerPower = zeros(1440,16);
      
 % Stores all injected PV powers, load and battery powers at each time step
 for count=1:55  
+    
+    if ID2 == 2 || ID2 == 3 || ID2 == 4 || ID2 == 5
     DSSCircuit.SetActiveElement(['PVSystem.pv_sys_' num2str(count)]);
     PVInjectedPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1); % (no reactive power from PV i.e PF=1)
+    end
     
     DSSCircuit.SetActiveElement(['Load.load' num2str(count)]);
     ActiveLoadPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1);
     ReactiveLoadPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,2);
     
-    %%write if statement...if ID1==1,2...etc
+    if ID2 == 4 || ID2 == 5
     DSSCircuit.SetActiveElement(['Storage.battery' num2str(count)]);
     ActiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1);
     ReactiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,2);
+    end
 end
 
 
@@ -123,8 +320,15 @@ AggragatedBatteryPowers = zeros(1440,1)
 for i=1:ROWS
 
         AggragatedLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
+        
+        if (ID2 == 2) || (ID2 == 3) || (ID2 == 4) || (ID2 == 5)
         AggragatedPVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
+        end
+        
+        if (ID2 == 4) || (ID2 == 5)
         AggragatedBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
+        end
+        
 end
 
 Aggragated_Powers_Figure = figure('Name', ['Aggragated Powers ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
