@@ -41,7 +41,7 @@ Colour10 = [1 51/255 51/255];
 [DSSStartOK, DSSObj, DSSText] = DSSStartup;
 
 % Compiles Master_LV_IEEE.dss file - Need to have OpenDSS installed
-DSSText.command='compile (C:\Users\bajai\Documents\University\Imperial College London\MSc Project\OpenDSS\Master_LV_IEEE.dss)';
+DSSText.command='compile (C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\OpenDSS Script\Master_LV_IEEE.dss)';
     
 % Set up the interface variables
 DSSCircuit = DSSObj.ActiveCircuit;
@@ -70,7 +70,7 @@ ActiveLoadPowers = zeros(1440,55);
 ReactiveLoadPowers = zeros(1440,55);
 LineLosses = zeros(1440,2);
 TransformerPower = zeros(1440,16);
-ElementLosses = zeros(1440,2038);
+% ElementLosses = zeros(1440,2038);
 
 % Loop to extract power flow solution at each time step
     for i=1:1440
@@ -94,7 +94,7 @@ ElementLosses = zeros(1440,2038);
      
 % Stores all injected PV powers and load powers at each time step
 for count=1:55  
-    DSSCircuit.SetActiveElement(['PVSystem.pv_sum_sys_' num2str(count)]);
+    DSSCircuit.SetActiveElement(['PVSystem.pv_sys_' num2str(count)]);
     PVInjectedPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1); % (no reactive power from PV i.e PF=1)
     
     DSSCircuit.SetActiveElement(['Load.load' num2str(count)]);
@@ -139,7 +139,7 @@ grid on;
 grid minor;
 ylabel('Apparent Energy Losses (kVA hours)','fontweight','bold','FontSize',8)
 title({'Total Transformer & Line Energy Losses - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Energy Losses (kWh)','Reactive Energy Losses (kVArh)'},'location','northwest','AutoUpdate','off')
+legend({'Active Energy Losses (kWh)','Reactive Energy Losses (kVArh)'},'location','east','AutoUpdate','off')
 set(gca,'XTickLabel',{'All Lines','Transformer', 'Total Losses'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
@@ -205,7 +205,7 @@ grid on;
 grid minor;
 ylabel('Apparent Energy (kVA hours)','fontweight','bold','FontSize',8)
 title({'Energy from Grid & on Transformer - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Energy (kWh)','Reactive Energy (kVArh)'},'location','northeast','AutoUpdate','off')
+legend({'Active Energy (kWh)','Reactive Energy (kVArh)'},'location','southwest','AutoUpdate','off')
 set(gca,'XTickLabel',{'Transformer','Grid'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
@@ -543,30 +543,30 @@ zlabel('Voltage Magnitude Phase C to Ground (V)')
 %% True Transformer Loading Power Plot
 
 TransformerLoadingFig = figure('Name', ['Transformer Loading ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-bar((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'FaceColor',Colour1)
+bar((1:ROWS)/60,TransformerApparentPower,'LineWidth',1,'Facecolor',Colour1)
 hold on
-bar((1:ROWS)/60,TransformerApparentPower,'LineWidth',1,'Facecolor',Colour3)
-bar((1:ROWS)/60,TransformerReactivePower,'LineWidth',1,'Facecolor',Colour2)
+bar((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'FaceColor',Colour2)
+bar((1:ROWS)/60,TransformerReactivePower,'LineWidth',1,'Facecolor',Colour3)
 
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.15]);
+set(gca, 'Position', [InSet(1)+0.09,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.15, 1-InSet(2)-InSet(4)-0.15]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Transformer Loading (Active & Reactive Power)','fontweight','bold','FontSize',8)
-ylim([-max(TransformerApparentPower)-65 max(TransformerApparentPower)])
+ylim([min(TransformerActivePower)-35, max(TransformerApparentPower)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Transformer Loading (Active & Reactive Power) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Power (kW)','Apparent Power (kVA) (Magnitude)','Reactive Power (kVAr)'},'location','southwest','FontSize',8,'AutoUpdate','off')
+legend({'Apparent Power (kVA) (Magnitude)','Active Power (kW)','Reactive Power (kVAr)'},'location','southwest','FontSize',8,'AutoUpdate','off')
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
 %% Transformer Energy Plot
 
-[ROWS, COLUMNS] = size(TransformerActivePower)
+[ROWS, COLUMNS] = size(TransformerActivePower);
 
 CumulativeTransformerEnergy_kWh =zeros(ROWS,1);
 
@@ -574,7 +574,7 @@ CumulativeTransformerEnergy_kWh =zeros(ROWS,1);
 for c = 1:ROWS
     
     if c==1
-    CumulativeTransformerEnergy_kWh(c) = abs(TransformerActivePower(c)/60)
+    CumulativeTransformerEnergy_kWh(c) = abs(TransformerActivePower(c)/60);
     end
     
     if c >1
@@ -603,7 +603,6 @@ title({'Transformer Cumulative Energy Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID
 
 TransformerEnergyTimeFig = figure('Name', ['Transformer Energy Vs. Time ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
 bar((1:ROWS)/60,abs(TransformerActivePower/60),'FaceColor',Colour1)
-
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')

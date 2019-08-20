@@ -25,241 +25,32 @@ New LineCode.4c_185 nphases=3 R1=0.166 X1=0.068 R0=0.58 X0=0.078 C1=0 C0=0 Units
 New LineCode.4c_70 nphases=3 R1=0.446 X1=0.071 R0=1.505 X0=0.083 C1=0 C0=0 Units=km
 New LineCode.4c_95_SAC_XC nphases=3 R1=0.322 X1=0.074 R0=0.804 X0=0.093 C1=0 C0=0 Units=km
 
-!! Summer Load Shape Definitions
 
-New Loadshape.Shape_1 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load1.csv) useactual=true
-New Loadshape.Shape_2 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load2.csv) useactual=true
-New Loadshape.Shape_3 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load3.csv) useactual=true
-New Loadshape.Shape_4 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load4.csv) useactual=true
-New Loadshape.Shape_5 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load5.csv) useactual=true
-New Loadshape.Shape_6 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load6.csv) useactual=true
-New Loadshape.Shape_7 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load7.csv) useactual=true
-New Loadshape.Shape_8 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load8.csv) useactual=true
-New Loadshape.Shape_9 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load9.csv) useactual=true
-New Loadshape.Shape_10 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load10.csv) useactual=true
-New Loadshape.Shape_11 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load11.csv) useactual=true
-New Loadshape.Shape_12 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load12.csv) useactual=true
-New Loadshape.Shape_13 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load13.csv) useactual=true
-New Loadshape.Shape_14 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load14.csv) useactual=true
-New Loadshape.Shape_15 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load15.csv) useactual=true
-New Loadshape.Shape_16 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load16.csv) useactual=true
-New Loadshape.Shape_17 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load17.csv) useactual=true
-New Loadshape.Shape_18 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load18.csv) useactual=true
-New Loadshape.Shape_19 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load19.csv) useactual=true
-New Loadshape.Shape_20 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load20.csv) useactual=true
-New Loadshape.Shape_21 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load21.csv) useactual=true
-New Loadshape.Shape_22 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load22.csv) useactual=true
-New Loadshape.Shape_23 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load23.csv) useactual=true
-New Loadshape.Shape_24 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load24.csv) useactual=true
-New Loadshape.Shape_25 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load25.csv) useactual=true
-New Loadshape.Shape_26 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load26.csv) useactual=true
-New Loadshape.Shape_27 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load27.csv) useactual=true
-New Loadshape.Shape_28 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load28.csv) useactual=true
-New Loadshape.Shape_29 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load29.csv) useactual=true
-New Loadshape.Shape_30 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load30.csv) useactual=true
-New Loadshape.Shape_31 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load31.csv) useactual=true
-New Loadshape.Shape_32 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load32.csv) useactual=true
-New Loadshape.Shape_33 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load33.csv) useactual=true
-New Loadshape.Shape_34 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load34.csv) useactual=true
-New Loadshape.Shape_35 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load35.csv) useactual=true
-New Loadshape.Shape_36 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load36.csv) useactual=true
-New Loadshape.Shape_37 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load37.csv) useactual=true
-New Loadshape.Shape_38 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load38.csv) useactual=true
-New Loadshape.Shape_39 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load39.csv) useactual=true
-New Loadshape.Shape_40 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load40.csv) useactual=true
-New Loadshape.Shape_41 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load41.csv) useactual=true
-New Loadshape.Shape_42 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load42.csv) useactual=true
-New Loadshape.Shape_43 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load43.csv) useactual=true
-New Loadshape.Shape_44 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load44.csv) useactual=true
-New Loadshape.Shape_45 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load45.csv) useactual=true
-New Loadshape.Shape_46 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load46.csv) useactual=true
-New Loadshape.Shape_47 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load47.csv) useactual=true
-New Loadshape.Shape_48 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load48.csv) useactual=true
-New Loadshape.Shape_49 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load49.csv) useactual=true
-New Loadshape.Shape_50 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load50.csv) useactual=true
-New Loadshape.Shape_51 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load51.csv) useactual=true
-New Loadshape.Shape_52 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load52.csv) useactual=true
-New Loadshape.Shape_53 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load53.csv) useactual=true
-New Loadshape.Shape_54 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load54.csv) useactual=true
-New Loadshape.Shape_55 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_Load_Output_kW_Load55.csv) useactual=true
+!! Load Shapes for either summer or winter (comment out one selection when simulating either summer or winter)
 
-!! Summer PV Shapes 
+ Redirect Summer_Load_Shapes.txt
+! Redirect Winter_Load_Shapes.txt
 
-New Loadshape.PV_1 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load1.csv) action=normalize
-New Loadshape.PV_2 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load2.csv) action=normalize
-New Loadshape.PV_3 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load3.csv) action=normalize
-New Loadshape.PV_4 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load4.csv) action=normalize
-New Loadshape.PV_5 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load5.csv) action=normalize
-New Loadshape.PV_6 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load6.csv) action=normalize
-New Loadshape.PV_7 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load7.csv) action=normalize
-New Loadshape.PV_8 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load8.csv) action=normalize
-New Loadshape.PV_9 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load9.csv) action=normalize
-New Loadshape.PV_10 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load10.csv) action=normalize
-New Loadshape.PV_11 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load11.csv) action=normalize
-New Loadshape.PV_12 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load12.csv) action=normalize
-New Loadshape.PV_13 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load13.csv) action=normalize
-New Loadshape.PV_14 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load14.csv) action=normalize
-New Loadshape.PV_15 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load15.csv) action=normalize
-New Loadshape.PV_16 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load16.csv) action=normalize
-New Loadshape.PV_17 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load17.csv) action=normalize
-New Loadshape.PV_18 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load18.csv) action=normalize
-New Loadshape.PV_19 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load19.csv) action=normalize
-New Loadshape.PV_20 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load20.csv) action=normalize
-New Loadshape.PV_21 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load21.csv) action=normalize
-New Loadshape.PV_22 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load22.csv) action=normalize
-New Loadshape.PV_23 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load23.csv) action=normalize
-New Loadshape.PV_24 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load24.csv) action=normalize
-New Loadshape.PV_25 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load25.csv) action=normalize
-New Loadshape.PV_26 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load26.csv) action=normalize
-New Loadshape.PV_27 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load27.csv) action=normalize
-New Loadshape.PV_28 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load28.csv) action=normalize
-New Loadshape.PV_29 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load29.csv) action=normalize
-New Loadshape.PV_30 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load30.csv) action=normalize
-New Loadshape.PV_31 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load31.csv) action=normalize
-New Loadshape.PV_32 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load32.csv) action=normalize
-New Loadshape.PV_33 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load33.csv) action=normalize
-New Loadshape.PV_34 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load34.csv) action=normalize
-New Loadshape.PV_35 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load35.csv) action=normalize
-New Loadshape.PV_36 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load36.csv) action=normalize
-New Loadshape.PV_37 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load37.csv) action=normalize
-New Loadshape.PV_38 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load38.csv) action=normalize
-New Loadshape.PV_39 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load39.csv) action=normalize
-New Loadshape.PV_40 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load40.csv) action=normalize
-New Loadshape.PV_41 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load41.csv) action=normalize
-New Loadshape.PV_42 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load42.csv) action=normalize
-New Loadshape.PV_43 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load43.csv) action=normalize
-New Loadshape.PV_44 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load44.csv) action=normalize
-New Loadshape.PV_45 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load45.csv) action=normalize
-New Loadshape.PV_46 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load46.csv) action=normalize
-New Loadshape.PV_47 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load47.csv) action=normalize
-New Loadshape.PV_48 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load48.csv) action=normalize
-New Loadshape.PV_49 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load49.csv) action=normalize
-New Loadshape.PV_50 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load50.csv) action=normalize
-New Loadshape.PV_51 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load51.csv) action=normalize
-New Loadshape.PV_52 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load52.csv) action=normalize
-New Loadshape.PV_53 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load53.csv) action=normalize
-New Loadshape.PV_54 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load54.csv) action=normalize
-New Loadshape.PV_55 npts=1440 minterval=1 mult=(file=Load_Profiles\Summer\Summer_PV_Output_kW_Load55.csv) action=normalize
-batchedit loadshape..* useactual=no
+!! Scenario PV Shapes  (Leave all commented out except the scenario desired). If Scenario 1 or 2 comment out all scenarios (No PV or storage in these scenarios)
 
+!! 50% PV Winter Load Shapes 
+! Redirect Scenario_3_or_7_PV.txt
 
-!! Winter Load Shape Definitions  
+!! 50% PV Summer Load Shapes
+! Redirect Scenario_4_or_8_PV.txt
 
-/*
-New Loadshape.Shape_1 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load1.csv) useactual=true
-New Loadshape.Shape_2 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load2.csv) useactual=true
-New Loadshape.Shape_3 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load3.csv) useactual=true
-New Loadshape.Shape_4 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load4.csv) useactual=true
-New Loadshape.Shape_5 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load5.csv) useactual=true
-New Loadshape.Shape_6 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load6.csv) useactual=true
-New Loadshape.Shape_7 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load7.csv) useactual=true
-New Loadshape.Shape_8 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load8.csv) useactual=true
-New Loadshape.Shape_9 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load9.csv) useactual=true
-New Loadshape.Shape_10 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load10.csv) useactual=true
-New Loadshape.Shape_11 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load11.csv) useactual=true
-New Loadshape.Shape_12 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load12.csv) useactual=true
-New Loadshape.Shape_13 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load13.csv) useactual=true
-New Loadshape.Shape_14 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load14.csv) useactual=true
-New Loadshape.Shape_15 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load15.csv) useactual=true
-New Loadshape.Shape_16 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load16.csv) useactual=true
-New Loadshape.Shape_17 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load17.csv) useactual=true
-New Loadshape.Shape_18 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load18.csv) useactual=true
-New Loadshape.Shape_19 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load19.csv) useactual=true
-New Loadshape.Shape_20 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load20.csv) useactual=true
-New Loadshape.Shape_21 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load21.csv) useactual=true
-New Loadshape.Shape_22 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load22.csv) useactual=true
-New Loadshape.Shape_23 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load23.csv) useactual=true
-New Loadshape.Shape_24 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load24.csv) useactual=true
-New Loadshape.Shape_25 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load25.csv) useactual=true
-New Loadshape.Shape_26 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load26.csv) useactual=true
-New Loadshape.Shape_27 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load27.csv) useactual=true
-New Loadshape.Shape_28 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load28.csv) useactual=true
-New Loadshape.Shape_29 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load29.csv) useactual=true
-New Loadshape.Shape_30 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load30.csv) useactual=true
-New Loadshape.Shape_31 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load31.csv) useactual=true
-New Loadshape.Shape_32 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load32.csv) useactual=true
-New Loadshape.Shape_33 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load33.csv) useactual=true
-New Loadshape.Shape_34 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load34.csv) useactual=true
-New Loadshape.Shape_35 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load35.csv) useactual=true
-New Loadshape.Shape_36 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load36.csv) useactual=true
-New Loadshape.Shape_37 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load37.csv) useactual=true
-New Loadshape.Shape_38 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load38.csv) useactual=true
-New Loadshape.Shape_39 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load39.csv) useactual=true
-New Loadshape.Shape_40 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load40.csv) useactual=true
-New Loadshape.Shape_41 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load41.csv) useactual=true
-New Loadshape.Shape_42 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load42.csv) useactual=true
-New Loadshape.Shape_43 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load43.csv) useactual=true
-New Loadshape.Shape_44 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load44.csv) useactual=true
-New Loadshape.Shape_45 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load45.csv) useactual=true
-New Loadshape.Shape_46 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load46.csv) useactual=true
-New Loadshape.Shape_47 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load47.csv) useactual=true
-New Loadshape.Shape_48 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load48.csv) useactual=true
-New Loadshape.Shape_49 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load49.csv) useactual=true
-New Loadshape.Shape_50 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load50.csv) useactual=true
-New Loadshape.Shape_51 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load51.csv) useactual=true
-New Loadshape.Shape_52 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load52.csv) useactual=true
-New Loadshape.Shape_53 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load53.csv) useactual=true
-New Loadshape.Shape_54 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load54.csv) useactual=true
-New Loadshape.Shape_55 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_Load_Output_kW_Load55.csv) useactual=true
+!! 100% PV Winter Load Shapes
+!Redirect Scenario_5_or_9_PV.txt
 
-New Loadshape.PV_1 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load1.csv) action=normalize
-New Loadshape.PV_2 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load2.csv) action=normalize
-New Loadshape.PV_3 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load3.csv) action=normalize
-New Loadshape.PV_4 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load4.csv) action=normalize
-New Loadshape.PV_5 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load5.csv) action=normalize
-New Loadshape.PV_6 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load6.csv) action=normalize
-New Loadshape.PV_7 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load7.csv) action=normalize
-New Loadshape.PV_8 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load8.csv) action=normalize
-New Loadshape.PV_9 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load9.csv) action=normalize
-New Loadshape.PV_10 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load10.csv) action=normalize
-New Loadshape.PV_11 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load11.csv) action=normalize
-New Loadshape.PV_12 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load12.csv) action=normalize
-New Loadshape.PV_13 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load13.csv) action=normalize
-New Loadshape.PV_14 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load14.csv) action=normalize
-New Loadshape.PV_15 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load15.csv) action=normalize
-New Loadshape.PV_16 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load16.csv) action=normalize
-New Loadshape.PV_17 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load17.csv) action=normalize
-New Loadshape.PV_18 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load18.csv) action=normalize
-New Loadshape.PV_19 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load19.csv) action=normalize
-New Loadshape.PV_20 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load20.csv) action=normalize
-New Loadshape.PV_21 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load21.csv) action=normalize
-New Loadshape.PV_22 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load22.csv) action=normalize
-New Loadshape.PV_23 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load23.csv) action=normalize
-New Loadshape.PV_24 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load24.csv) action=normalize
-New Loadshape.PV_25 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load25.csv) action=normalize
-New Loadshape.PV_26 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load26.csv) action=normalize
-New Loadshape.PV_27 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load27.csv) action=normalize
-New Loadshape.PV_28 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load28.csv) action=normalize
-New Loadshape.PV_29 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load29.csv) action=normalize
-New Loadshape.PV_30 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load30.csv) action=normalize
-New Loadshape.PV_31 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load31.csv) action=normalize
-New Loadshape.PV_32 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load32.csv) action=normalize
-New Loadshape.PV_33 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load33.csv) action=normalize
-New Loadshape.PV_34 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load34.csv) action=normalize
-New Loadshape.PV_35 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load35.csv) action=normalize
-New Loadshape.PV_36 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load36.csv) action=normalize
-New Loadshape.PV_37 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load37.csv) action=normalize
-New Loadshape.PV_38 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load38.csv) action=normalize
-New Loadshape.PV_39 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load39.csv) action=normalize
-New Loadshape.PV_40 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load40.csv) action=normalize
-New Loadshape.PV_41 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load41.csv) action=normalize
-New Loadshape.PV_42 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load42.csv) action=normalize
-New Loadshape.PV_43 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load43.csv) action=normalize
-New Loadshape.PV_44 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load44.csv) action=normalize
-New Loadshape.PV_45 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load45.csv) action=normalize
-New Loadshape.PV_46 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load46.csv) action=normalize
-New Loadshape.PV_47 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load47.csv) action=normalize
-New Loadshape.PV_48 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load48.csv) action=normalize
-New Loadshape.PV_49 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load49.csv) action=normalize
-New Loadshape.PV_50 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load50.csv) action=normalize
-New Loadshape.PV_51 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load51.csv) action=normalize
-New Loadshape.PV_52 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load52.csv) action=normalize
-New Loadshape.PV_53 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load53.csv) action=normalize
-New Loadshape.PV_54 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load54.csv) action=normalize
-New Loadshape.PV_55 npts=1440 minterval=1 mult=(file=Load_Profiles\Winter\Winter_PV_Output_kW_Load55.csv) action=normalize
-batchedit loadshape..* useactual=no
-*/
+!! 100% PV Summer Load Shapes
+! Redirect Scenario_6_or_10_PV.txt
 
+! No Battery sotrage in s
+
+! Redirect Scenario7_Battery.txt
+! Redirect Scenario8_Battery.txt
+! Redirect Scenario9_Battery.txt
+! Redirect Scenario10_Battery.txt
 
 !Redirect LineCode.txt
 !Redirect Lines.txt
@@ -1174,7 +965,7 @@ New Line.LINE905 Bus1=905 Bus2=906 phases=3 Linecode=2c_16 Length=4.8147 Units=m
 New Transformer.TR1 Buses=[SourceBus 1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
 
 
-!dump transformer.TR1 debug
+!dump transformer.TR1 debug  !used for checking TF primitive admittance matrix calculation
 
 
 !! Load Definitions 
@@ -1236,63 +1027,13 @@ New Load.LOAD54 Phases=1 Bus1=900.1 kV=0.23 kW=1 PF=0.95 Yearly=Shape_54
 New Load.LOAD55 Phases=1 Bus1=906.1 kV=0.23 kW=1 PF=0.95 Yearly=Shape_55
 batchedit load..* Vmaxpu=1.15 Vminpu=0.85
 
-!! PV System Definitions
 
-New PVSystem.PV_SUM_SYS_1 phases=1 bus1=34.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_1
-New PVSystem.PV_SUM_SYS_2 phases=1 bus1=47.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_2
-New PVSystem.PV_SUM_SYS_3 phases=1 bus1=70.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_3
-New PVSystem.PV_SUM_SYS_4 phases=1 bus1=73.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_4
-New PVSystem.PV_SUM_SYS_5 phases=1 bus1=74.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_5
-New PVSystem.PV_SUM_SYS_6 phases=1 bus1=83.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_6
-New PVSystem.PV_SUM_SYS_7 phases=1 bus1=178.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_7
-New PVSystem.PV_SUM_SYS_8 phases=1 bus1=208.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_8
-New PVSystem.PV_SUM_SYS_9 phases=1 bus1=225.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_9
-New PVSystem.PV_SUM_SYS_10 phases=1 bus1=248.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_10
-New PVSystem.PV_SUM_SYS_11 phases=1 bus1=249.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_11
-New PVSystem.PV_SUM_SYS_12 phases=1 bus1=264.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_12
-New PVSystem.PV_SUM_SYS_13 phases=1 bus1=276.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_13
-New PVSystem.PV_SUM_SYS_14 phases=1 bus1=289.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_14
-New PVSystem.PV_SUM_SYS_15 phases=1 bus1=314.2  kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_15
-New PVSystem.PV_SUM_SYS_16 phases=1 bus1=320.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_16
-New PVSystem.PV_SUM_SYS_17 phases=1 bus1=327.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_17
-New PVSystem.PV_SUM_SYS_18 phases=1 bus1=337.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_18
-New PVSystem.PV_SUM_SYS_19 phases=1 bus1=342.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_19
-New PVSystem.PV_SUM_SYS_20 phases=1 bus1=349.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_20
-New PVSystem.PV_SUM_SYS_21 phases=1 bus1=387.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_21
-New PVSystem.PV_SUM_SYS_22 phases=1 bus1=388.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_22
-New PVSystem.PV_SUM_SYS_23 phases=1 bus1=406.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_23
-New PVSystem.PV_SUM_SYS_24 phases=1 bus1=458.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_24
-New PVSystem.PV_SUM_SYS_25 phases=1 bus1=502.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_25
-New PVSystem.PV_SUM_SYS_26 phases=1 bus1=522.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_26
-New PVSystem.PV_SUM_SYS_27 phases=1 bus1=539.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_27
-New PVSystem.PV_SUM_SYS_28 phases=1 bus1=556.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_28
-New PVSystem.PV_SUM_SYS_29 phases=1 bus1=562.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_29
-New PVSystem.PV_SUM_SYS_30 phases=1 bus1=563.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_30
-New PVSystem.PV_SUM_SYS_31 phases=1 bus1=611.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_31
-New PVSystem.PV_SUM_SYS_32 phases=1 bus1=614.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_32
-New PVSystem.PV_SUM_SYS_33 phases=1 bus1=619.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_33
-New PVSystem.PV_SUM_SYS_34 phases=1 bus1=629.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_34
-New PVSystem.PV_SUM_SYS_35 phases=1 bus1=639.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_35
-New PVSystem.PV_SUM_SYS_36 phases=1 bus1=676.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_36
-New PVSystem.PV_SUM_SYS_37 phases=1 bus1=682.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_37
-New PVSystem.PV_SUM_SYS_38 phases=1 bus1=688.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_38
-New PVSystem.PV_SUM_SYS_39 phases=1 bus1=701.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_39
-New PVSystem.PV_SUM_SYS_40 phases=1 bus1=702.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_40
-New PVSystem.PV_SUM_SYS_41 phases=1 bus1=755.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_41
-New PVSystem.PV_SUM_SYS_42 phases=1 bus1=778.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_42
-New PVSystem.PV_SUM_SYS_43 phases=1 bus1=780.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_43
-New PVSystem.PV_SUM_SYS_44 phases=1 bus1=785.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_44
-New PVSystem.PV_SUM_SYS_45 phases=1 bus1=813.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_45
-New PVSystem.PV_SUM_SYS_46 phases=1 bus1=817.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_46
-New PVSystem.PV_SUM_SYS_47 phases=1 bus1=835.3 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_47
-New PVSystem.PV_SUM_SYS_48 phases=1 bus1=860.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_48
-New PVSystem.PV_SUM_SYS_49 phases=1 bus1=861.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_49
-New PVSystem.PV_SUM_SYS_50 phases=1 bus1=886.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_50
-New PVSystem.PV_SUM_SYS_51 phases=1 bus1=896.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_51
-New PVSystem.PV_SUM_SYS_52 phases=1 bus1=898.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_52
-New PVSystem.PV_SUM_SYS_53 phases=1 bus1=899.2 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_53
-New PVSystem.PV_SUM_SYS_54 phases=1 bus1=900.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_54
-New PVSystem.PV_SUM_SYS_55 phases=1 bus1=906.1 kV=0.23 kVA=2.7412 irradiance=1 Pmpp=2.7412 %cutin=0.1 %cutout=0.1 yearly=PV_55
+!! PV System Definitions
+! Redirect Scenario_3_or_7_PV_System_Definition_PV.txt
+! Redirect Scenario_4_or_8_PV_System_Definition_PV.txt
+! Redirect  Scenario_5_or_9_PV_System_Definition_PV.txt
+! Redirect Scenario_6_or_10_PV_System_Definition_PV.txt
+
 
 
 
@@ -1341,32 +1082,6 @@ buscoords buscoords.txt
 
 !export mon Battery1_PQ_vs_Time
 !export Voltages
-
-/*
-plot profile ph=all
-export mon LINE1_VI_VS_Time
-export mon LINE611_VI_VS_Time
-export mon LINE898_VI_VS_Time
-export mon LINE6_VI_VS_Time
-export mon LINE27_VI_VS_Time
-export mon LINE71_VI_VS_Time
-export mon LINE147_VI_VS_Time
-export mon LINE170_VI_VS_Time
-export mon LINE195_VI_VS_Time
-export mon LINE262_VI_VS_Time
-export mon LINE438_VI_VS_Time
-export mon LINE504_VI_VS_Time
-export mon LINE603_VI_VS_Time
-export mon LINE825_VI_VS_Time
-
-Show mon LINE558_VI_vs_Time 
-Show mon LINE825_VI_vs_Time 
-
-Visualize element=Line.LINE1 what=powers
-
-Plot monitor object= line558_vi_vs_time channels=(1 3 5 ) bases=[240 240 240]
-Plot monitor object= line825_vi_vs_time channels=(1 3 5 ) bases=[240 240 240]
-*/
 
 
 ! Storage Exports 
