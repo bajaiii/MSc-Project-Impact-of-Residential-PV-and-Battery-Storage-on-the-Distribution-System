@@ -21,11 +21,10 @@ Developed and tested on **MATLAB R2018b** & **OpenDSS Version 8.5.9.1 (64-Bit)**
 
 OpenDSS can be can be downloaded from: **https://sourceforge.net/p/electricdss/wiki/Home/**. This page also specifies the key features of OpenDSS.
 
-**Step 2:** Copy the files/folders '*DSSStartup.m*', '*Buscoords.txt*', '*Load_Profiles*', '*Final_MSc_Thesis_Code_Stefan_Bajai.m*', and '*Master_LV_IEEE.dss*', to the same location. 
+**Step 2:** Copy all files and folders from this rpeository to your hard drive. Open the'*Final_MSc_Thesis_Code_Stefan_Bajai.m*' and change Line 44 (DSSText.command='compile (C:\...***FilePath***...\OpenDSS Script\Master_LV_IEEE.dss)';) to the file path that contains the '*Master_LV_IEEE.dss*' file. 
 
-**Step 3:** Change the scenario you wish to simulate in the *'Master_LV_IEEE.dss'* using OpenDSS. This can be done by commenting out definitions of PV elements and load shapes in the code. The scenarios for each simulation are described in the report. In the OpenDSS scripting language, comment lines can be added line-by-line by inserting an **'!'** at the beginning of the line or, alternatively and more appropriate in this case, is to use the block comment by inserting **'/*'** before the code you wish to comment out and **'*/'** after the code you wish to comment out. 
+**Step 3:** Start OpenDSS and open the '*Master_LV_IEEE.dss*' file. Change the scenario you wish to simulate in the *'Master_LV_IEEE.dss'* using the OpenDSS script editor. This can be done by commenting out definitions of PV elements and load shapes in the code. The scenarios for each simulation are described in the report. In the OpenDSS scripting language, comment lines can be added line-by-line by inserting an **'!'** at the beginning of the line or, alternatively, use the block comment by inserting **'/*'** before the code you wish to comment out and **'*/'** after the code you wish to comment out. 
 
-**Step 4:** Run the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' file in matlab and display the solutions to the power flow study. 
-
+**Step 4:** Execute the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' script in matlab and display the solutions to the power flow study. 
 
 
