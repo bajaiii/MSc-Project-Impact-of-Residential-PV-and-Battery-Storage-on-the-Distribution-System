@@ -25,7 +25,6 @@ New LineCode.4c_185 nphases=3 R1=0.166 X1=0.068 R0=0.58 X0=0.078 C1=0 C0=0 Units
 New LineCode.4c_70 nphases=3 R1=0.446 X1=0.071 R0=1.505 X0=0.083 C1=0 C0=0 Units=km
 New LineCode.4c_95_SAC_XC nphases=3 R1=0.322 X1=0.074 R0=0.804 X0=0.093 C1=0 C0=0 Units=km
 
-
 !! Load Shapes for either summer or winter (comment out one selection when simulating either summer or winter)
 
  Redirect Summer_Load_Shapes.txt
