@@ -92,7 +92,7 @@ TransformerPower = zeros(1440,16);
         DSSCircuit.SetActiveElement(['Transformer.tr1']);
         TransformerPower(i,:) = DSSCircuit.ActiveCktElement.Powers;% Stores all transformer powers at each time step
      
-% Stores all injected PV powers and load powers at each time step
+% Stores all injected PV powers, load and battery powers at each time step
 for count=1:55  
     DSSCircuit.SetActiveElement(['PVSystem.pv_sys_' num2str(count)]);
     PVInjectedPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1); % (no reactive power from PV i.e PF=1)
@@ -100,15 +100,60 @@ for count=1:55
     DSSCircuit.SetActiveElement(['Load.load' num2str(count)]);
     ActiveLoadPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1);
     ReactiveLoadPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,2);
+    
+    %%write if statement...if ID1==1,2...etc
+    DSSCircuit.SetActiveElement(['Storage.battery' num2str(count)]);
+    ActiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1);
+    ReactiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,2);
 end
 
 
     end
+
+%% PV POWERS VS BATTERY POWERS VS LOAD POWERS
+
+[ROWS COLS] = size(ActiveLoadPowers);
+
+% Preallocation of matrices for speed
+AggragatedLoadPowers = zeros(1440,1)
+AggragatedPVPowers = zeros(1440,1)
+AggragatedBatteryPowers = zeros(1440,1)
+
+% Get cumulative powers
+for i=1:ROWS
+
+        AggragatedLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
+        AggragatedPVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
+        AggragatedBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
+end
+
+Aggragated_Powers_Figure = figure('Name', ['Aggragated Powers ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
+plot((1:ROWS)/60,AggragatedLoadPowers,'LineWidth',1,'color',Colour1);
+hold on
+plot((1:ROWS)/60,AggragatedPVPowers,'LineWidth',1,'color',Colour2);
+plot((1:ROWS)/60,AggragatedBatteryPowers,'LineWidth',1,'color',Colour3);
+
+InSet = get(gca, 'TightInset');
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.13]);
+
+%%--%%--%%--PLOT STYLING--%%--%%--%%
+set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
+grid on;
+grid minor;
+ylabel('Active Power (kW)','fontweight','bold','FontSize',8)
+ylim([min(AggragatedPVPowers)-20, max(AggragatedLoadPowers)+10])
+xlabel('Hour','fontweight','bold','FontSize',8)
+xlim([0 ROWS/60])
+title({'Aggragated PV, Load & Storage Powers Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+legend({'Loads','PVs','Batteries'},'location','southwest','AutoUpdate','off')
+% %%--%%--%%--PLOT STYLING--%%--%%--%%
+
     
 %%
 NodeNames = DSSCircuit.AllNodeNames;        % Returns Node Names
 BusNames = DSSCircuit.AllBusNames;          % Returns Bus Names
 ElementNames = DSSCircuit.AllElementNames;  % Returns Circuit Element Names
+% DSSText.Command ='Buscoords Buscoords.dat   ! load in bus coordinates'; %Returns coordinates of buses
 
 %% Plots Bar Chart of Circuit Losses
 
@@ -653,6 +698,11 @@ saveas(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Im
 saveas(CumulativeEnergyFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Cumulative_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
 saveas(TransformerEnergyTimeFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Energy_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
 saveas(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Power_Losses_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+saveas(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+
+Aggragated_Powers_Figure.PaperUnits = 'inches';
+Aggragated_Powers_Figure.PaperPosition = [0 0 3 2.5];
+print(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 
 StackedBarLossesFigure.PaperUnits = 'inches';
 StackedBarLossesFigure.PaperPosition = [0 0 3 2.5];
