@@ -5,6 +5,7 @@
 % Imperial College London 
 % Department of Electrical & Electronics Engineering
 % Date: August 2019
+% Supervisor: Onyema Nduka
 
 % Description of code: Simulates the IEEE European LV Test Feeder with 1-minute resolution PV profiles. The user is required to have OpenDSS installed to run this code and
 % have all load and PV generation profiles available in the the same folder

@@ -8,15 +8,15 @@
 
 !Set DefaultBaseFrequency=50     !Since UK System
 
-!New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder 
+New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder 
 
 ! Instead of fixed point iterative, can also use Newton method to solve
-!set algorithm=newton
+! set algorithm=newton
 
 !Edit Vsource.Source BasekV=11 pu=1 ISC3=3000  ISC1=1500
 
 
-!Redirect LineCodes.txt
+Redirect LineCodes.txt
 
 !! Load Shapes for either summer or winter (comment out one selection when simulating either summer or winter)
 
@@ -27,7 +27,7 @@
 !! Scenario PV Shapes  (Leave all commented out except the scenario desired). If Scenario 1 or 2 comment out all scenarios (No PV or storage in these scenarios)
 
 !! 50% PV Winter Load Shapes 
-! Redirect Scenario_3_or_7_PV.txt
+!Redirect Scenario_3_or_7_PV.txt
 
 !! 50% PV Summer Load Shapes
 ! Redirect Scenario_4_or_8_PV.txt
@@ -124,7 +124,7 @@ batchedit load..* Vmaxpu=1.15 Vminpu=0.85
 
 !! PV System Definitions (If simulating scenarios 3, 4, 5, 6, 7, 8,9, or 10 uncomment the appropriate battery system definitions immediately below)
 
-! Redirect Scenario_3_or_7_PV_System_Definition_PV.txt
+!Redirect Scenario_3_or_7_PV_System_Definition_PV.txt
 ! Redirect Scenario_4_or_8_PV_System_Definition_PV.txt
 ! Redirect  Scenario_5_or_9_PV_System_Definition_PV.txt
 ! Redirect Scenario_6_or_10_PV_System_Definition_PV.txt
@@ -132,7 +132,6 @@ batchedit load..* Vmaxpu=1.15 Vminpu=0.85
 !! PV System Definitions (If simulating scenarios 7,8,9, or 10 uncomment the appropriate battery system definitions immediately below)
 ! Redirect Scenario_7_or_8_Battery_System_Definition.txt
 ! Redirect Scenario_9_or_10_Battery_System_Definition.txt
-
 
 !TimeChargeTrig=2.0
 
@@ -145,9 +144,7 @@ batchedit load..* Vmaxpu=1.15 Vminpu=0.85
 !Calcvoltagebases
 !buscoords buscoords.txt
 
-
 !solve
-
 
 ! Set "DemandInterval" to true so that energy quantities recorded by energy meters are recorded for 
 ! each time step and set "casename" to define a directory under default directory in which all of the 
@@ -164,14 +161,4 @@ batchedit load..* Vmaxpu=1.15 Vminpu=0.85
 
 !solve 
 
-!show Voltage LN Nodes
-
 !closedi     ! close demand interval files at end of run
-
-!plot circuit Power Max=30 dots=n labels=n subs=y C1=$00FF0000
-
-!export mon Battery1_PQ_vs_Time
-!export Voltages
-
-
-! Storage Exports 
