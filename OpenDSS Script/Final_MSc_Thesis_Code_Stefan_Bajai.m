@@ -19,9 +19,25 @@
 % Step 3. Execute this script. This script will prompt the user which
 % Scenario they wish to replicate. 
 
+% For full modelling methodology, please see Thesis report which can also
+% be found on the repositiory listed above. 
+
+
 clear;
 clc;
 close all;
+
+%% Personalised Matlab Colour Scheme
+Colour1 = [0.2 0.8 1];
+Colour2 = [0 .8 0];
+Colour3 = [1 .5 1];
+Colour4 = [1 .6 .4];
+Colour5 = [1 0.35 0.35];
+Colour6 = [153/255 51/255 1];
+Colour7 = [25/255, 75/255, 1];
+Colour8 = [51/255 1 51/255];
+Colour9 = [1 .15 1];
+Colour10 = [1 51/255 51/255];
 
 %% Scenario ID - Used for tracking Scenario #
 
@@ -134,22 +150,6 @@ ErrorMessage = 'Selection not valid. Please select a valid Scenario in integer f
 
 end
 
-
-
-%%
-%   Personalised Matlab Colour Scheme
-Colour1 = [0.2 0.8 1];
-Colour2 = [0 .8 0];
-Colour3 = [1 .5 1];
-Colour4 = [1 .6 .4];
-Colour5 = [1 0.35 0.35];
-Colour6 = [153/255 51/255 1];
-Colour7 = [25/255, 75/255, 1];
-Colour8 = [51/255 1 51/255];
-Colour9 = [1 .15 1];
-Colour10 = [1 51/255 51/255];
-
-
 %%
 % Starts OpenDSS Engine in MATLAB
 [DSSStartOK, DSSObj, DSSText] = DSSStartup;
@@ -161,6 +161,7 @@ DSSSolution = DSSCircuit.Solution;
 %% Development of IEEE European LV Test Feeder Circuit in OpenDSS Using the COM interface
 
 DSSText.command = 'clearall'; % Clears all variables in OpenDSS engine
+DSSText.command = 'clear'; % Clears all variables in OpenDSS engine
 DSSText.command = 'Set DefaultBaseFrequency = 50'; % Sets UK grid frequency
 DSSText.command = 'New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder'; %Gives circuit a name
 % DSSText.command = 'set algorithm=newton';  % Changes solution method
@@ -206,10 +207,6 @@ end
 if (ID2 == 3 && ID3 ==2)||(ID2 == 5 && ID3 ==2)
 DSSText.command = 'Redirect Scenario_6_or_10_PV.txt';
 end
-
-%If Scenario 7 use this profile for the battery control mode (battery tries
-%to follow this load considering rated power, SOC, Energy capacity,
-%efficiency, etc...)
 
 if (ID2 == 4 && ID3 ==1)
 DSSText.command = 'Redirect Scenario_7_Battery_Loadshapes.txt';
@@ -265,7 +262,7 @@ DSSText.command = 'Redirect LoadDefinitions.txt';
 
 %Used for checking TF primitive matrix calculations
 %%DSSText.command = 'dump transformer.TR1 debug ';
-
+                                                                        
 % Sets voltage bases for system (Operational value for UK used...i.e
 % 416 Three-phase)
 DSSText.command = 'Set voltagebases=[11  .416]';
@@ -273,18 +270,41 @@ DSSText.command = 'Calcvoltagebases';
 DSSText.command = 'buscoords buscoords.txt';
 
 %%
+% DSSText.command = 'batchedit Storage..* debugtrace=y'; %used for
+% debugging the storage elements
 
-%Sets simulation mode (quasi static)
-DSSText.command= 'set mode=yearly number= 1440 stepsize=1m';    % one day simulation 
+% Sets min and max voltages before storage converts to constant impedance
+% model (should be done for voltage studies) 
+DSSText.command = 'batchedit storage..* Vmaxpu=1.15 Vminpu=0.85'; 
+
+%%% User can manually change  the max rated energy storage capacity rating for all battery
+%%% elements in the circuit by uncommenting the next line
+% DSSText.command = 'batchedit storage..* kWhRated=50'; 
+% 
+%%% User can manually change  the maximum power rating for all battery
+%%% elements in the circuit by uncommenting the next line
+% DSSText.command = 'batchedit storage..* kWRated=10'; 
+% DSSText.command = 'batchedit storage..* kwrated=7 kWhRated=15 %reserve=0 %stored=100';
 
 
-% DSSText.command= 'set miniterations = 1'    %  Sets minimum iterations to solve at
-%each time step - Default is 2 but reduced to 1 in time sequential study to
-%improve speed
+
+% No storage reserve (i.e does not begin charging when storage hits the
+% reserve %) for any storage element and defines the intial state of charge for all storage elements
+% as 50%
+DSSText.command = 'batchedit storage..* %reserve=0 %stored=50';
+
+
+% DSSText.command= 'set miniterations = 5'    %  Sets minimum iterations to solve at
+% %each time step - Default is 2 but reduced to 1 in time sequential study to
+% %improve speed
 
 % DSSText.command= 'algortihm = newton'    % Changes solve method to Newton
 
-DSSText.Command = 'Set number = 1';  % sets the solve command to only solve for 1 time interval (1-minute)
+%Sets simulation mode (quasi static one day simulation)
+DSSText.command= 'set mode=yearly number= 1440 stepsize=1m';    % Sets up one day simulation
+
+% sets the solve command to only solve for 1 time interval (1-minute)
+DSSText.Command = 'Set number = 1';  
 
 %% Preallocation of matrices for speed
 V1 = zeros(1440,907); % (1440 minutes and 907 buses)
@@ -324,25 +344,28 @@ TransformerPower = zeros(1440,16);
      
 % Stores all injected PV powers, load and battery powers at each time step
 
-for count=1:NumberofPVSystems
-    
-    if ID2 == 2 || ID2 == 3 || ID2 == 4 || ID2 == 5
+
+% If scenario 3,4, 7 or 8 get pv powers like so
+if (ID2 == 2 && ID3 ==1)||(ID2 == 2 && ID3 ==2)||(ID2 == 4 && ID3 ==1)||(ID2 == 4 && ID3 ==2)
+    k=1;
+    for count=1:2:55  
     DSSCircuit.SetActiveElement(['PVSystem.pv_sys_' num2str(count)]);
     PVInjectedPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1); % (no reactive power from PV i.e PF=1)
+    k=k+1;
     end
-    
 end
 
-for count=1:NumberofBatterySystems
-    
-    if ID2 == 4 || ID2 == 5
-    DSSCircuit.SetActiveElement(['Storage.battery' num2str(count)]);
-    ActiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,1);
-    ReactiveBatteryPowers(i,count) = DSSCircuit.ActiveCktElement.Powers(:,2);
+% if scenario 5, 6, 9, 10 get pv powers like so
+if (ID2 == 3 && ID3 ==1)||(ID2 == 3 && ID3 ==2)||(ID2 == 5 && ID3 ==1)||(ID2 == 5 && ID3 ==2)
+    k=1;
+    for count=1:55  
+    DSSCircuit.SetActiveElement(['PVSystem.pv_sys_' num2str(count)]);
+    PVInjectedPowers(i,k) = DSSCircuit.ActiveCktElement.Powers(:,1); % (no reactive power from PV i.e PF=1)
+    k=k+1;
     end
-    
 end
 
+%for all loads get powers
 for count=1:55  
    
     DSSCircuit.SetActiveElement(['Load.load' num2str(count)]);
@@ -351,9 +374,36 @@ for count=1:55
     
 end
 
-    
-end
+
+ % If scenario 7 or 8 get Battery powers    
+ if (ID2 == 4 && ID3 ==1)||(ID2 == 4 && ID3 ==2) 
+    k=1;
+    for count=1:2:55
+    DSSCircuit.SetActiveElement(['Storage.battery' num2str(count)]);
+    ActiveBatteryPowers(i,k) = DSSCircuit.ActiveCktElement.Powers(:,1);
+    ReactiveBatteryPowers(i,k) = DSSCircuit.ActiveCktElement.Powers(:,2);
+    k=k+1;
+    end
+ end
+ 
+ %If scenario 9 or 10 get Battery powers
+  if (ID2 == 5 && ID3 ==1)||(ID2 == 5 && ID3 ==2)    
+    k=1;
+    for count=1:55
+    DSSCircuit.SetActiveElement(['Storage.battery' num2str(count)]);
+    ActiveBatteryPowers(i,k) = DSSCircuit.ActiveCktElement.Powers(:,1);
+    ReactiveBatteryPowers(i,k) = DSSCircuit.ActiveCktElement.Powers(:,2);
+    k=k+1;
+    end
+  end
+
+    end
   
+    %% Organises Transformer Powers
+
+TransformerActivePower = TransformerPower(:,1) + TransformerPower(:,3) + TransformerPower(:,5); %3-Phase Transformer Active Power
+TransformerReactivePower = TransformerPower(:,2) + TransformerPower(:,4) + TransformerPower(:,6);%3-Phase Transformer Reactive Power
+TransformerApparentPower = abs(TransformerActivePower + j*TransformerReactivePower);
     
 % DSSText.command= 'Set Year=1 ';
     
@@ -382,14 +432,17 @@ for i=1:ROWS
         
 end
         
-Net_Power_Total =   AggragatedLoadPowers - abs(AggragatedPVPowers) -abs(AggragatedBatteryPowers); 
+Net_Power_Total =   abs(AggragatedPVPowers) - abs(AggragatedLoadPowers) - AggragatedBatteryPowers;
+
+%AggragatedLoadPowers - abs(AggragatedPVPowers) +abs(AggragatedBatteryPowers); 
 
 Aggragated_Powers_Figure = figure('Name', ['Aggragated Powers ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
 plot((1:ROWS)/60,AggragatedLoadPowers,'LineWidth',1,'color',Colour1);
 hold on
 plot((1:ROWS)/60,AggragatedPVPowers,'LineWidth',1,'color',Colour2);
 plot((1:ROWS)/60,AggragatedBatteryPowers,'LineWidth',1,'color',Colour3);
-plot((1:ROWS)/60,Net_Power_Total,'LineWidth',1,'color',Colour4);
+plot((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'color',Colour4);
+
 
 InSet = get(gca, 'TightInset');
 set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.13]);
@@ -403,7 +456,7 @@ ylim([min(AggragatedPVPowers)-20, max(AggragatedLoadPowers)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Aggragated PV, Load & Storage Powers Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Loads','PVs','Batteries','Net Power (Generation-Demand)'},'location','southwest','AutoUpdate','off')
+legend({'Loads','PVs','Batteries','Transformer'},'location','southwest','AutoUpdate','off')
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
     
@@ -446,11 +499,7 @@ legend({'Active Energy Losses (kWh)','Reactive Energy Losses (kVArh)'},'location
 set(gca,'XTickLabel',{'All Lines','Transformer', 'Total Losses'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
-%% Organises Transformer Powers
 
-TransformerActivePower = TransformerPower(:,1) + TransformerPower(:,3) + TransformerPower(:,5); %3-Phase Transformer Active Power
-TransformerReactivePower = TransformerPower(:,2) + TransformerPower(:,4) + TransformerPower(:,6);%3-Phase Transformer Reactive Power
-TransformerApparentPower = abs(TransformerActivePower + j*TransformerReactivePower);
 
 %% Plots Bar Chart of Transformer & Grid Energy
 

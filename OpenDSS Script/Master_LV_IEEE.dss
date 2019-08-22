@@ -16,7 +16,7 @@ New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder
 !Edit Vsource.Source BasekV=11 pu=1 ISC3=3000  ISC1=1500
 
 
-Redirect LineCodes.txt
+!Redirect LineCodes.txt
 
 !! Load Shapes for either summer or winter (comment out one selection when simulating either summer or winter)
 
@@ -45,7 +45,7 @@ Redirect LineCodes.txt
 !! Redirect Scenario_7_Battery_Loadshapes.txt
 !! Redirect Scenario_8_Battery_Loadshapes.txt
 ! Redirect Scenario_9_Battery_Loadshapes.txt
-!Redirect Scenario_10_Battery_Loadshapes.txt
+! Redirect Scenario_10_Battery_Loadshapes.txt
 
 !! Definitions of all lines in the system
 !Redirect Line_Definitions.txt. 
