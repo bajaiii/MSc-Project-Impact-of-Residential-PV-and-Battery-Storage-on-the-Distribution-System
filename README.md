@@ -17,7 +17,7 @@ Developed and tested on **MATLAB R2018b** & **OpenDSS Version 8.5.9.1 (64-Bit)**
 
 ## Replicating Simulations
 
-**Step 1:** Install MATLAB & OpenDSS (ensure both are 64-bit versions for compatibility). During OpenDSS installation make sure the OpenDSS COM Engine is registered. Usually done automatically during installation but can check by opening VBA in Excel (**hold alt & F11** while in Excel) then **>** tools **>** references and check if the OpenDSS Engine appears. If it is, the COM Engine is installed correctly. The COM Engine enables interfacing between MATLAB and OpenDSS (i.e all unbalanced load flow simulations can be ran from MATLAB directly and the solutions of each simulation can be presented using MATLAB)
+**Step 1:** Install MATLAB & OpenDSS (ensure both are 64-bit versions for compatibility). During OpenDSS installation make sure the OpenDSS COM Engine is registered. Usually done automatically during installation but can check by opening VBA in Excel (**hold alt & F11** while in Excel) then **>** tools **>** references and check if the OpenDSS Engine appears. If it does appear, the COM Engine is installed correctly. The COM Engine enables interfacing between MATLAB and OpenDSS (i.e all 3-phase/unbalanced load flow simulations can be ran from MATLAB directly and the solutions of each simulation can be presented using MATLAB)
 
 OpenDSS can be can be downloaded from: **https://sourceforge.net/p/electricdss/wiki/Home/**. This page also specifies the key features of OpenDSS.
 
