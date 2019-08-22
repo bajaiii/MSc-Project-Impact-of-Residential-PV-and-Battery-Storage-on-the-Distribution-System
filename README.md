@@ -21,7 +21,7 @@ Developed and tested on **MATLAB R2018b** & **OpenDSS Version 8.5.9.1 (64-Bit)**
 
 OpenDSS can be downloaded from: **https://sourceforge.net/p/electricdss/wiki/Home/**. This page also specifies the key features of OpenDSS.
 
-**Step 2:** Copy all files and folders from this repository to your hard drive. Open the'*Final_MSc_Thesis_Code_Stefan_Bajai.m*' and execute the script. 
+**Step 2:** Copy the folder ‘OpenDSS Script’  from this repository to your hard drive. Open the'*Final_MSc_Thesis_Code_Stefan_Bajai.m*' within this folder and execute the script. 
 
 **Step 3:** MATLAB will prompt the user which scenario they wish to simulate. The options are between 1-10. Once a selection has been made, the same Scenario will be replicated.
 
