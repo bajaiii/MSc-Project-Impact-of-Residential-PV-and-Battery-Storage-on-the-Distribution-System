@@ -17,11 +17,10 @@
 % have been copied to the users hard drive. This repository also includes
 % detailed steps on how to replicate scenarios. 
 % Step 3. Execute this script. This script will prompt the user which
-% Scenario they wish to replicate. 
+% Scenario they wish to replicate
 
 % For full modelling methodology, please see Thesis report which can also
-% be found on the repositiory listed above. 
-
+% be found on the repositiory listed above in PDF format. 
 
 clear;
 clc;
@@ -41,7 +40,7 @@ Colour10 = [1 51/255 51/255];
 
 %% Scenario ID - Used for tracking Scenario #
 
-UserPrompt = 'What Scenario do you want Simulate? Options are 1-10.  ';
+UserPrompt = 'Which scenario do you want to simulate? Options are 1-10.  ';
 UserAnswer = input(UserPrompt)
 
 if UserAnswer == 1
@@ -50,7 +49,7 @@ Scenario = 'Scenario 1 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 1;
 ID3 = 1;
-Season = 'Winter (No PV or Battery Storage)';
+Season = 'Winter (No PV or Storage)';
 NumberofPVSystems = 0;
 NumberofBatterySystems = 0;
 
@@ -60,7 +59,7 @@ Scenario = 'Scenario 2 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 1;
 ID3 = 2;
-Season = 'Summer (No PV or Battery Storage)';
+Season = 'Summer (No PV or Storage)';
 NumberofPVSystems =0;
 NumberofBatterySystems =0;
 
@@ -70,7 +69,7 @@ Scenario = 'Scenario 3 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 2;
 ID3 = 1;
-Season = 'Winter (50% PV, No Battery Storage)';
+Season = 'Winter (50% PV, No Storage)';
 NumberofPVSystems = length(1:2:55);
 NumberofBatterySystems =0;
 
@@ -80,7 +79,7 @@ Scenario = 'Scenario 4 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 2;
 ID3 = 2;
-Season = 'Summer (50% PV, No Battery Storage)';
+Season = 'Summer (50% PV, No Storage)';
 NumberofPVSystems = length(1:2:55);
 NumberofBatterySystems =0;
 
@@ -90,7 +89,7 @@ Scenario = 'Scenario 5 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 3;
 ID3 = 1;
-Season = 'Winter (100% PV, No Battery Storage)';
+Season = 'Winter (100% PV, No Storage)';
 NumberofPVSystems = 55;
 NumberofBatterySystems = 0;
 
@@ -100,7 +99,7 @@ Scenario = 'Scenario 6 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 3;
 ID3 = 2;
-Season = 'Summer (100% PV, No Battery Storage)';
+Season = 'Summer (100% PV, No Storage)';
 NumberofPVSystems = 55;
 NumberofBatterySystems = 0;
 
@@ -110,7 +109,7 @@ Scenario = 'Scenario 7 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 4;
 ID3 = 1;
-Season = 'Winter (50% PV, 50% Battery Storage)';
+Season = 'Winter (50% PV, 50% Storage)';
 NumberofPVSystems = length(1:2:55);
 NumberofBatterySystems =length(1:2:55);
 
@@ -120,7 +119,7 @@ Scenario = 'Scenario 8 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 4;
 ID3 = 2;
-Season = 'Summer (50% PV, 50% Battery Storage)';
+Season = 'Summer (50% PV, 50% Storage)';
 NumberofPVSystems = length(1:2:55);
 NumberofBatterySystems =length(1:2:55);
 
@@ -130,7 +129,7 @@ Scenario = 'Scenario 9 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 5;
 ID3 = 1;
-Season = 'Winter (100% PV, 100% Battery Storage)';
+Season = 'Winter (100% PV, 100% Storage)';
 NumberofPVSystems = 55;
 NumberofBatterySystems = 55;
 
@@ -140,13 +139,13 @@ Scenario = 'Scenario 10 - %d.%d.%d %s';
 ID1 = 4;
 ID2 = 5;
 ID3 = 2;
-Season = 'Summer (100% PV, 100% Battery Storage)';
+Season = 'Summer (100% PV, 100% Storage)';
 NumberofPVSystems = 55;
 NumberofBatterySystems = 55;
 
 else
         
-ErrorMessage = 'Selection not valid. Please select a valid Scenario in integer format between 1-10.'
+ErrorMessage = 'Selection not valid. Please select a valid Scenario in integer format between 1-10.';
 
 end
 
@@ -166,10 +165,9 @@ DSSText.command = 'Set DefaultBaseFrequency = 50'; % Sets UK grid frequency
 DSSText.command = 'New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder'; %Gives circuit a name
 % DSSText.command = 'set algorithm=newton';  % Changes solution method
 % (default is fixed point iterative method)
-DSSText.command = 'Edit Vsource.Source BasekV=11 pu=1 ISC3=3000  ISC1=1500';
+DSSText.command = 'Edit Vsource.Source BasekV=11 pu=1 ISC3=3000  ISC1=1500'; % Defines source voltage (grid connection) 
 
 DSSText.command = 'Redirect LineCodes.txt'; % gets cable definitions
-
 
 % Defines different load shapes, PV shapes and battery shapes depending on
 % user input previous input prompt. User input options are from 1-10 (in integer format)
@@ -179,7 +177,7 @@ DSSText.command = 'Redirect Winter_Load_Shapes.txt';
 elseif ID3 ==2
 DSSText.command = 'Redirect Summer_Load_Shapes.txt';
 else
-ErrorMessage = 'ID3 is not correct.Check Code.'
+ErrorMessage = 'ID3 is not correct.Check Code.';
 end
 
 % Defines all lines in the system
@@ -271,7 +269,7 @@ DSSText.command = 'buscoords buscoords.txt';
 
 %%
 % DSSText.command = 'batchedit Storage..* debugtrace=y'; %used for
-% debugging the storage elements
+% debugging storage elements (Not necessary)
 
 % Sets min and max voltages before storage converts to constant impedance
 % model (should be done for voltage studies) 
@@ -279,20 +277,16 @@ DSSText.command = 'batchedit storage..* Vmaxpu=1.15 Vminpu=0.85';
 
 %%% User can manually change  the max rated energy storage capacity rating for all battery
 %%% elements in the circuit by uncommenting the next line
-% DSSText.command = 'batchedit storage..* kWhRated=50'; 
+% DSSText.command = 'batchedit storage..* kWhRated=20'; 
 % 
 %%% User can manually change  the maximum power rating for all battery
 %%% elements in the circuit by uncommenting the next line
 % DSSText.command = 'batchedit storage..* kWRated=10'; 
-% DSSText.command = 'batchedit storage..* kwrated=7 kWhRated=15 %reserve=0 %stored=100';
-
-
 
 % No storage reserve (i.e does not begin charging when storage hits the
 % reserve %) for any storage element and defines the intial state of charge for all storage elements
 % as 50%
 DSSText.command = 'batchedit storage..* %reserve=0 %stored=50';
-
 
 % DSSText.command= 'set miniterations = 5'    %  Sets minimum iterations to solve at
 % %each time step - Default is 2 but reduced to 1 in time sequential study to
@@ -300,11 +294,19 @@ DSSText.command = 'batchedit storage..* %reserve=0 %stored=50';
 
 % DSSText.command= 'algortihm = newton'    % Changes solve method to Newton
 
-%Sets simulation mode (quasi static one day simulation)
+% Sets simulation mode (quasi static one day simulation)
 DSSText.command= 'set mode=yearly number= 1440 stepsize=1m';    % Sets up one day simulation
 
 % sets the solve command to only solve for 1 time interval (1-minute)
 DSSText.Command = 'Set number = 1';  
+
+%%
+NodeNames = DSSCircuit.AllNodeNames;        % Returns Node Names
+BusNames = DSSCircuit.AllBusNames;          % Returns Bus Names
+ElementNames = DSSCircuit.AllElementNames;  % Returns Circuit Element Names
+NumberofCircuitElements = DSSCircuit.NumCktElements; % Counts number of elements in circuit
+% DSSText.Command ='Buscoords Buscoords.dat   ! load in bus coordinates'; %Returns coordinates of buses
+
 
 %% Preallocation of matrices for speed
 V1 = zeros(1440,907); % (1440 minutes and 907 buses)
@@ -321,6 +323,7 @@ ActiveLoadPowers = zeros(1440,55);
 ReactiveLoadPowers = zeros(1440,55);
 LineLosses = zeros(1440,2);
 TransformerPower = zeros(1440,16);
+ElementLosses = zeros(1440,2*NumberofCircuitElements);
 
 % Loop to extract power flow solution at each time step
     for i=1:1440  %1440 mins in one day
@@ -411,61 +414,53 @@ TransformerApparentPower = abs(TransformerActivePower + j*TransformerReactivePow
 %% PV POWERS VS BATTERY POWERS VS LOAD POWERS
 
 % Preallocation of matrices for speed
-AggragatedLoadPowers = zeros(1440,1)
-AggragatedPVPowers = zeros(1440,1)
-AggragatedBatteryPowers = zeros(1440,1)
+AggregetedLoadPowers = zeros(1440,1);
+AggregatedPVPowers = zeros(1440,1);
+AggregatedBatteryPowers = zeros(1440,1);
 
-[ROWS COLS] = size(ActiveLoadPowers);
+[ROWS, COLS] = size(ActiveLoadPowers);
 
 % Get aggragated powers
 for i=1:ROWS
     
-        AggragatedLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
+        AggregetedLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
 
         if (ID2 == 2) || (ID2 == 3) || (ID2 == 4) || (ID2 == 5)
-        AggragatedPVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
+        AggregatedPVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
         end
 
         if (ID2 == 4) || (ID2 == 5)
-        AggragatedBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
+        AggregatedBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
         end
         
 end
         
-Net_Power_Total =   abs(AggragatedPVPowers) - abs(AggragatedLoadPowers) - AggragatedBatteryPowers;
 
 %AggragatedLoadPowers - abs(AggragatedPVPowers) +abs(AggragatedBatteryPowers); 
 
 Aggragated_Powers_Figure = figure('Name', ['Aggragated Powers ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-plot((1:ROWS)/60,AggragatedLoadPowers,'LineWidth',1,'color',Colour1);
+plot((1:ROWS)/60,AggregetedLoadPowers,'LineWidth',1,'color',Colour1);
 hold on
-plot((1:ROWS)/60,AggragatedPVPowers,'LineWidth',1,'color',Colour2);
-plot((1:ROWS)/60,AggragatedBatteryPowers,'LineWidth',1,'color',Colour3);
+plot((1:ROWS)/60,AggregatedPVPowers,'LineWidth',1,'color',Colour2);
+plot((1:ROWS)/60,AggregatedBatteryPowers,'LineWidth',1,'color',Colour3);
 plot((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'color',Colour4);
 
-
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.13]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.13, 1-InSet(2)-InSet(4)-0.13]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Active Power (kW)','fontweight','bold','FontSize',8)
-ylim([min(AggragatedPVPowers)-20, max(AggragatedLoadPowers)+10])
+ylim([min(AggregatedPVPowers)-45, max(AggregetedLoadPowers)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
-title({'Aggragated PV, Load & Storage Powers Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Loads','PVs','Batteries','Transformer'},'location','southwest','AutoUpdate','off')
+title({'Aggregated PV, Load & Storage Powers Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+legend({'Loads','PVs','Batteries','Transformer'},'location','southwest','AutoUpdate','off','NumColumns',2)
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
     
-%%
-NodeNames = DSSCircuit.AllNodeNames;        % Returns Node Names
-BusNames = DSSCircuit.AllBusNames;          % Returns Bus Names
-ElementNames = DSSCircuit.AllElementNames;  % Returns Circuit Element Names
-% DSSText.Command ='Buscoords Buscoords.dat   ! load in bus coordinates'; %Returns coordinates of buses
-
 %% Plots Bar Chart of Circuit Losses
 
 TotalActiveLineLosses = sum(LineLosses(:,1)/60,'all');
@@ -527,43 +522,43 @@ for i=1:length(GridPower)
       
 end
 
-TotalActiveTransformerEnergy = abs(sum(TransformerActivePower/60,'all'));
-TotalReactiveTransformerEnergy = abs(sum(TransformerReactivePower/60,'all'));
+PVActiveEnergyGeneration = abs(sum(AggregatedPVPowers/60,'all'));
+PVReactiveEnergyGeneration = 0;
+
+TotalActiveTransformerEnergy = sum(abs(TransformerActivePower/60),'all');
+TotalReactiveTransformerEnergy = sum(abs(TransformerReactivePower)/60,'all');
 
 TotalActiveGridEnergy = abs(sum(ActiveGridPower/60,'all'));
 TotalReactiveGridEnergy = abs(sum(ReactiveGridPower/60,'all'));
 
-% TotalReactiveLineLosses = sum(LineLosses(:,2)/60,'all');
-% TotalActiveTransformerLosses = sum(TransformerLosses(:,1)/60,'all');
-% TotalReactiveTransformerLosses = sum(TransformerLosses(:,2)/60,'all');
-% 
-% TotalActiveLossesPlot = TotalActiveLineLosses + TotalActiveTransformerLosses;
-% TotalReactiveLossesPlot = TotalReactiveLineLosses + TotalReactiveTransformerLosses;
+ActiveLoadEnergy = abs(sum(ActiveLoadPowers/60,'all'))
+ReactiveLoadEnergy = 0;
 
 %Sets up data for stacked plot
 StackedTotalEnergy = [TotalActiveTransformerEnergy,        TotalReactiveTransformerEnergy; 
-                           TotalActiveGridEnergy,               TotalReactiveGridEnergy;];
+                           TotalActiveGridEnergy,               TotalReactiveGridEnergy;
+                           PVActiveEnergyGeneration,            PVReactiveEnergyGeneration
+                           ActiveLoadEnergy                     ReactiveLoadEnergy];
                        
 StackedBarENERGYFigure = figure('Name', ['Stacked Bar Chart Energy ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
 StackedBarEnergy = bar(StackedTotalEnergy,'stacked','LineWidth',2);
 set(StackedBarEnergy(1), 'FaceColor', Colour1,'LineWidth',2,'EdgeColor','none');
 set(StackedBarEnergy(2), 'FaceColor', Colour2,'LineWidth',2,'EdgeColor','none');
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.05,InSet(2), 1-InSet(1)-InSet(3)-0.07, 1-InSet(2)-InSet(4)-0.1]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2), 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.1]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Apparent Energy (kVA hours)','fontweight','bold','FontSize',8)
-title({'Energy from Grid & on Transformer - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+title({'Energy supplied by Grid, PVs & on Transformer' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
 legend({'Active Energy (kWh)','Reactive Energy (kVArh)'},'location','southwest','AutoUpdate','off')
-set(gca,'XTickLabel',{'Transformer','Grid'});
+set(gca,'XTickLabel',{'Transformer','Grid','PVs','Loads'});
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
 %% Gets the phase to ground voltage magnitudes at every load
-NumberofCircuitElements = DSSCircuit.NumCktElements; % Counts number of elements in circuit
 
 Load_Information = readtable('IEEE_LV_TEST_FEEDER_Load_Info.csv');
 Loads_Connected_to_Bus_No = Load_Information(2,2:end);
@@ -651,7 +646,7 @@ UnbalancePlot = surf(x,y,(Unbalance)','EdgeColor','none','LineWidth',0.1);
 hold on 
 
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.08,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.13, 1-InSet(2)-InSet(4)-0.22]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -689,7 +684,7 @@ hold on
 
 view(-38,10)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.09, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -726,7 +721,7 @@ hold on
 
 view(0,0)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.12, 1-InSet(2)-InSet(4)-0.25]);
 
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
@@ -759,12 +754,12 @@ BusNumbers = [1:COLUMNS]';
 
 %3D Surface Plot 
 V2_3D_PLOTFigure = figure('Name', ['Phase B Voltage at all Loads ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-V2_3D_PLOT = surf(x,y,(V2Loads*240)','EdgeColor','none','LineWidth',0.1)
+V2_3D_PLOT = surf(x,y,(V2Loads*240)','EdgeColor','none','LineWidth',0.1);
 hold on 
 
 view(-38,10)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.09, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -801,7 +796,7 @@ hold on
 
 view(0,0)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.12, 1-InSet(2)-InSet(4)-0.25]);
 
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
@@ -838,7 +833,7 @@ hold on
 
 view(-38,10)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.05, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.09, 1-InSet(2)-InSet(4)-0.25]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -875,7 +870,7 @@ hold on
 
 view(0,0)
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.08, 1-InSet(2)-InSet(4)-0.25]);
+set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.08, 1-InSet(1)-InSet(3)-0.12, 1-InSet(2)-InSet(4)-0.25]);
 
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
@@ -993,7 +988,7 @@ legend({'Active Line Losses (kW)','Transformer Reactive Power (VAr)', 'Reactive 
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
-%% Interactive & Regular Plot Exports
+%% Interactive & Regular Plot Exports (Comment this section out if 
 
 saveas(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
 saveas(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
