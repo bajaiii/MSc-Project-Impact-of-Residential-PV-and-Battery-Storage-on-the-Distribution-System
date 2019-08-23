@@ -446,7 +446,7 @@ plot((1:ROWS)/60,AggregatedBatteryPowers,'LineWidth',1,'color',Colour3);
 plot((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'color',Colour4);
 
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.13, 1-InSet(2)-InSet(4)-0.13]);
+set(gca, 'Position', [InSet(1)+0.08,InSet(2)+0.05, 1-InSet(1)-InSet(3)-0.14, 1-InSet(2)-InSet(4)-0.13]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
@@ -456,7 +456,7 @@ ylabel('Active Power (kW)','fontweight','bold','FontSize',8)
 ylim([min(AggregatedPVPowers)-45, max(AggregetedLoadPowers)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
-title({'Aggregated PV, Load & Storage Powers Vs. Time - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
+title({'Aggregated PV, Load, Transformer & Storage Powers' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
 legend({'Loads','PVs','Batteries','Transformer'},'location','southwest','AutoUpdate','off','NumColumns',2)
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
@@ -896,14 +896,14 @@ bar((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'FaceColor',Colour2)
 bar((1:ROWS)/60,TransformerReactivePower,'LineWidth',1,'Facecolor',Colour3)
 
 InSet = get(gca, 'TightInset');
-set(gca, 'Position', [InSet(1)+0.09,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.15, 1-InSet(2)-InSet(4)-0.15]);
+set(gca, 'Position', [InSet(1)+0.07,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.15, 1-InSet(2)-InSet(4)-0.15]);
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
 ylabel('Transformer Loading (Active & Reactive Power)','fontweight','bold','FontSize',8)
-ylim([min(TransformerActivePower)-35, max(TransformerApparentPower)+10])
+ylim([min(TransformerActivePower)-65, max(TransformerApparentPower)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Transformer Loading (Active & Reactive Power) - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
@@ -974,12 +974,11 @@ bar((1:ROWS)/60,TransformerLosses(:,1),'LineWidth',1,'Facecolor',Colour3)
 InSet = get(gca, 'TightInset');
 set(gca, 'Position', [InSet(1)+0.06,InSet(2)+0.06, 1-InSet(1)-InSet(3)-0.1, 1-InSet(2)-InSet(4)-0.15]);
 
-
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XMinorTick', 'on','YMinorTick'  , 'on')
 grid on;
 grid minor;
-ylabel('Transformer Losses (Active & Reactive Power)','fontweight','bold','FontSize',8)
+ylabel('Power Losses','fontweight','bold','FontSize',8)
 ylim([0 max(LineLosses(:,1))+0.7])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
