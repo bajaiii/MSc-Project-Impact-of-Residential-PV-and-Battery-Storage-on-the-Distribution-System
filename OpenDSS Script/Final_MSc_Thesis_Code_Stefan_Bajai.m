@@ -530,13 +530,13 @@ end
 ActiveReverseEnergy = sum(abs(ActiveReversePowerFlow)/60,'all')
 
 
-PVActiveEnergyGeneration = abs(sum(AggregatedActivePVPowers/60,'all'));
+PVActiveEnergyGeneration = abs(sum(AggregatedActivePVPowers/60,'all'))
 PVReactiveEnergyGeneration = 0;
 
 TotalActiveTransformerEnergy = sum(abs(TransformerActivePower/60),'all');
 TotalReactiveTransformerEnergy = sum(abs(TransformerReactivePower)/60,'all');
 
-TotalActiveGridEnergy = abs(sum(ActiveGridPower/60,'all'));
+TotalActiveGridEnergy = abs(sum(ActiveGridPower/60,'all'))
 TotalReactiveGridEnergy = abs(sum(ReactiveGridPower/60,'all'));
 
 ActiveLoadEnergy = abs(sum(ActiveLoadPowers/60,'all'))
