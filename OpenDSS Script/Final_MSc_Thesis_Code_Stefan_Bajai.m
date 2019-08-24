@@ -414,23 +414,23 @@ TransformerApparentPower = abs(TransformerActivePower + j*TransformerReactivePow
 %% PV POWERS VS BATTERY POWERS VS LOAD POWERS
 
 % Preallocation of matrices for speed
-AggregetedLoadPowers = zeros(1440,1);
-AggregatedPVPowers = zeros(1440,1);
-AggregatedBatteryPowers = zeros(1440,1);
+AggregetedActiveLoadPowers = zeros(1440,1);
+AggregatedActivePVPowers = zeros(1440,1);
+AggregatedActiveBatteryPowers = zeros(1440,1);
 
 [ROWS, COLS] = size(ActiveLoadPowers);
 
 % Get aggragated powers
 for i=1:ROWS
     
-        AggregetedLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
+        AggregetedActiveLoadPowers(i,:) = sum(ActiveLoadPowers(i,:),'all');
 
         if (ID2 == 2) || (ID2 == 3) || (ID2 == 4) || (ID2 == 5)
-        AggregatedPVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
+        AggregatedActivePVPowers(i,:) = sum(PVInjectedPowers(i,:),'all');
         end
 
         if (ID2 == 4) || (ID2 == 5)
-        AggregatedBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
+        AggregatedActiveBatteryPowers(i,:) = sum(ActiveBatteryPowers(i,:),'all');
         end
         
 end
@@ -439,10 +439,10 @@ end
 %AggragatedLoadPowers - abs(AggragatedPVPowers) +abs(AggragatedBatteryPowers); 
 
 Aggragated_Powers_Figure = figure('Name', ['Aggragated Powers ', sprintf(Scenario,ID1,ID2,ID3,Season) ]);
-plot((1:ROWS)/60,AggregetedLoadPowers,'LineWidth',1,'color',Colour1);
+plot((1:ROWS)/60,AggregetedActiveLoadPowers,'LineWidth',1,'color',Colour1);
 hold on
-plot((1:ROWS)/60,AggregatedPVPowers,'LineWidth',1,'color',Colour2);
-plot((1:ROWS)/60,AggregatedBatteryPowers,'LineWidth',1,'color',Colour3);
+plot((1:ROWS)/60,AggregatedActivePVPowers,'LineWidth',1,'color',Colour2);
+plot((1:ROWS)/60,AggregatedActiveBatteryPowers,'LineWidth',1,'color',Colour3);
 plot((1:ROWS)/60,TransformerActivePower,'LineWidth',1,'color',Colour4);
 
 InSet = get(gca, 'TightInset');
@@ -453,7 +453,7 @@ set(gca, 'FontName', 'Times New Roman','FontSize',8,'TickLength', [.03 .03] ,'XM
 grid on;
 grid minor;
 ylabel('Active Power (kW)','fontweight','bold','FontSize',8)
-ylim([min(AggregatedPVPowers)-45, max(AggregetedLoadPowers)+10])
+ylim([min(AggregatedActivePVPowers)-45, max(AggregetedActiveLoadPowers)+10])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Aggregated PV, Load, Transformer & Storage Powers' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
@@ -519,10 +519,18 @@ for i=1:length(GridPower)
     else
         ReactiveGridPower(i) = 0;
     end
-      
+    
+    if GridPower(i,1)>0
+        ActiveReversePowerFlow(i) = abs(GridPower(i,1));
+    else
+        ActiveReversePowerFlow(i) = 0;
+    end
 end
 
-PVActiveEnergyGeneration = abs(sum(AggregatedPVPowers/60,'all'));
+ActiveReverseEnergy = sum(abs(ActiveReversePowerFlow)/60,'all')
+
+
+PVActiveEnergyGeneration = abs(sum(AggregatedActivePVPowers/60,'all'));
 PVReactiveEnergyGeneration = 0;
 
 TotalActiveTransformerEnergy = sum(abs(TransformerActivePower/60),'all');
@@ -983,68 +991,68 @@ ylim([0 max(LineLosses(:,1))+0.7])
 xlabel('Hour','fontweight','bold','FontSize',8)
 xlim([0 ROWS/60])
 title({'Transformer & Line Losses - ELVTF ' sprintf(Scenario,ID1,ID2,ID3,Season)},'FontSize',8)
-legend({'Active Line Losses (kW)','Transformer Reactive Power (VAr)', 'Reactive Line Losses (kVAr)','Transformer Active Losses (kW)'},'location','northwest','AutoUpdate','off')
+legend({'Active Line Losses (kW)','Transformer Reactive Losses (kVAr)', 'Reactive Line Losses (kVAr)','Transformer Active Losses (kW)'},'location','northwest','AutoUpdate','off')
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
-%% Interactive & Regular Plot Exports (Comment this section out if 
+%% Interactive & Regular Plot Exports (Comment this section out if not exporting plots) 
 
-saveas(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Loading_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(CumulativeEnergyFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Cumulative_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(TransformerEnergyTimeFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Energy_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Power_Losses_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
-saveas(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Loading_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(CumulativeEnergyFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Cumulative_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(TransformerEnergyTimeFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Transformer_Energy_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Power_Losses_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% saveas(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
+% 
+% Aggragated_Powers_Figure.PaperUnits = 'inches';
+% Aggragated_Powers_Figure.PaperPosition = [0 0 3 2.5];
+% print(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% StackedBarLossesFigure.PaperUnits = 'inches';
+% StackedBarLossesFigure.PaperPosition = [0 0 3 2.5];
+% print(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% StackedBarENERGYFigure.PaperUnits = 'inches';
+% StackedBarENERGYFigure.PaperPosition = [0 0 3 2.5];
+% print(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% UnbalancePlotFigure.PaperUnits = 'inches';
+% UnbalancePlotFigure.PaperPosition = [0 0 3 2.5];
+% print(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% V1_3D_PLOTFigure.PaperUnits = 'inches';
+% V1_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+% print(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% V1_3D_PLOTFigure2.PaperUnits = 'inches';
+% V1_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+% print(V1_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% V2_3D_PLOTFigure.PaperUnits = 'inches';
+% V2_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+% print(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% V2_3D_PLOTFigure2.PaperUnits = 'inches';
+% V2_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+% print(V2_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% 
+% V3_3D_PLOTFigure.PaperUnits = 'inches';
+% V3_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
+% print(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 
-Aggragated_Powers_Figure.PaperUnits = 'inches';
-Aggragated_Powers_Figure.PaperPosition = [0 0 3 2.5];
-print(Aggragated_Powers_Figure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Aggragated_Powers_VS_Time_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% V3_3D_PLOTFigure2.PaperUnits = 'inches';
+% V3_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
+% print(V3_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 
-StackedBarLossesFigure.PaperUnits = 'inches';
-StackedBarLossesFigure.PaperPosition = [0 0 3 2.5];
-print(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% TransformerLoadingFig.PaperUnits = 'inches';
+% TransformerLoadingFig.PaperPosition = [0 0 3 2.5];
+% print(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Loading_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 
-StackedBarENERGYFigure.PaperUnits = 'inches';
-StackedBarENERGYFigure.PaperPosition = [0 0 3 2.5];
-print(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-UnbalancePlotFigure.PaperUnits = 'inches';
-UnbalancePlotFigure.PaperPosition = [0 0 3 2.5];
-print(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V1_3D_PLOTFigure.PaperUnits = 'inches';
-V1_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
-print(V1_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V1_3D_PLOTFigure2.PaperUnits = 'inches';
-V1_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
-print(V1_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_A_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V2_3D_PLOTFigure.PaperUnits = 'inches';
-V2_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
-print(V2_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V2_3D_PLOTFigure2.PaperUnits = 'inches';
-V2_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
-print(V2_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_B_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V3_3D_PLOTFigure.PaperUnits = 'inches';
-V3_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
-print(V3_3D_PLOTFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-V3_3D_PLOTFigure2.PaperUnits = 'inches';
-V3_3D_PLOTFigure2.PaperPosition = [0 0 3 2.5];
-print(V3_3D_PLOTFigure2, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Phase_C_3D_Voltage_Magnitude_Plot_x_Axis_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-TransformerLoadingFig.PaperUnits = 'inches';
-TransformerLoadingFig.PaperPosition = [0 0 3 2.5];
-print(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Loading_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
-
-LossesFigure.PaperUnits = 'inches';
-LossesFigure.PaperPosition = [0 0 3 2.5];
-print(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Line_Losses_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% LossesFigure.PaperUnits = 'inches';
+% LossesFigure.PaperPosition = [0 0 3 2.5];
+% print(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Line_Losses_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
