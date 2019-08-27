@@ -669,6 +669,7 @@ xlim([0 ROWS/60])
 ylabel('Load #')
 ylim([0 COLUMNS])
 zlabel('Unbalance (%)')
+zlim([0, 1])
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 
@@ -1021,9 +1022,9 @@ legend({'Active Line Losses (kW)','Transformer Reactive Losses (kVAr)', 'Reactiv
 % StackedBarENERGYFigure.PaperPosition = [0 0 3 2.5];
 % print(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 % 
-% UnbalancePlotFigure.PaperUnits = 'inches';
-% UnbalancePlotFigure.PaperPosition = [0 0 3 2.5];
-% print(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+UnbalancePlotFigure.PaperUnits = 'inches';
+UnbalancePlotFigure.PaperPosition = [0 0 3 2.5];
+print(UnbalancePlotFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\3_Phase_Unbalance_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 % 
 % V1_3D_PLOTFigure.PaperUnits = 'inches';
 % V1_3D_PLOTFigure.PaperPosition = [0 0 3 2.5];
