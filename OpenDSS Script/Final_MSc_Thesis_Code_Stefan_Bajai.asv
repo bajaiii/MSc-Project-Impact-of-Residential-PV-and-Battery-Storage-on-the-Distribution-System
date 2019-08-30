@@ -40,9 +40,11 @@ Colour10 = [1 51/255 51/255];
 
 %% Scenario ID - Used for tracking Scenario #
 
+% Prompts the user to specify a scenario to simulate
 UserPrompt = 'Which scenario do you want to simulate? Options are 1-10.  ';
 UserAnswer = input(UserPrompt)
 
+% Uses the users input to set up the simulation ID
 if UserAnswer == 1
 
 Scenario = 'Scenario 1 - %d.%d.%d %s';

@@ -40,9 +40,11 @@ Colour10 = [1 51/255 51/255];
 
 %% Scenario ID - Used for tracking Scenario #
 
+% Prompts the user to specify a scenario to simulate
 UserPrompt = 'Which scenario do you want to simulate? Options are 1-10.  ';
 UserAnswer = input(UserPrompt)
 
+% Uses the users input to set up the simulation ID
 if UserAnswer == 1
 
 Scenario = 'Scenario 1 - %d.%d.%d %s';
@@ -172,9 +174,10 @@ DSSText.command = 'Redirect LineCodes.txt'; % gets cable definitions
 % Defines different load shapes, PV shapes and battery shapes depending on
 % user input previous input prompt. User input options are from 1-10 (in integer format)
 
-if ID3 ==1
+
+if ID3 ==1 % If winter simulation use this load shape
 DSSText.command = 'Redirect Winter_Load_Shapes.txt';
-elseif ID3 ==2
+elseif ID3 ==2 % if summer simulation use this load shape
 DSSText.command = 'Redirect Summer_Load_Shapes.txt';
 else
 ErrorMessage = 'ID3 is not correct.Check Code.';
