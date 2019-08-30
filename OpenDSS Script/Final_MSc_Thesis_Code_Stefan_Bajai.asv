@@ -277,11 +277,11 @@ DSSText.command = 'batchedit storage..* Vmaxpu=1.15 Vminpu=0.85';
 
 %%% User can manually change  the max rated energy storage capacity rating for all battery
 %%% elements in the circuit by uncommenting the next line
-% DSSText.command = 'batchedit storage..* kWhRated=20'; 
+% DSSText.command = 'batchedit storage..* kWhRated=50'; 
 % 
 %%% User can manually change  the maximum power rating for all battery
 %%% elements in the circuit by uncommenting the next line
-% DSSText.command = 'batchedit storage..* kWRated=10'; 
+% DSSText.command = 'batchedit storage..* kWRated=20'; 
 
 % No storage reserve (i.e does not begin charging when storage hits the
 % reserve %) for any storage element and defines the intial state of charge for all storage elements
@@ -520,17 +520,23 @@ for i=1:length(GridPower)
         ReactiveGridPower(i) = 0;
     end
     
-    
-      
+    if GridPower(i,1)>0
+        ActiveReversePowerFlow(i) = abs(GridPower(i,1));
+    else
+        ActiveReversePowerFlow(i) = 0;
+    end
 end
 
-PVActiveEnergyGeneration = abs(sum(AggregatedActivePVPowers/60,'all'));
+ActiveReverseEnergy = sum(abs(ActiveReversePowerFlow)/60,'all')
+
+
+PVActiveEnergyGeneration = abs(sum(AggregatedActivePVPowers/60,'all'))
 PVReactiveEnergyGeneration = 0;
 
 TotalActiveTransformerEnergy = sum(abs(TransformerActivePower/60),'all');
 TotalReactiveTransformerEnergy = sum(abs(TransformerReactivePower)/60,'all');
 
-TotalActiveGridEnergy = abs(sum(ActiveGridPower/60,'all'));
+TotalActiveGridEnergy = abs(sum(ActiveGridPower/60,'all'))
 TotalReactiveGridEnergy = abs(sum(ReactiveGridPower/60,'all'));
 
 ActiveLoadEnergy = abs(sum(ActiveLoadPowers/60,'all'))
@@ -663,6 +669,7 @@ xlim([0 ROWS/60])
 ylabel('Load #')
 ylim([0 COLUMNS])
 zlabel('Unbalance (%)')
+zlim([0, 1])
 
 %%--%%--%%--PLOT STYLING--%%--%%--%%
 
@@ -989,7 +996,7 @@ legend({'Active Line Losses (kW)','Transformer Reactive Losses (kVAr)', 'Reactiv
 % %%--%%--%%--PLOT STYLING--%%--%%--%%
 
 
-%% Interactive & Regular Plot Exports (Comment this section out if 
+%% Interactive & Regular Plot Exports (Comment this section out if not exporting plots) 
 
 % saveas(StackedBarLossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Stacked_Bar_Chart_Losses_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
 % saveas(StackedBarENERGYFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Interactive (MATLAB) Plots\Total_Grid_and_Transformer_Energy_Plot_' sprintf(Scenario,ID1,ID2,ID3,Season) '.fig'], 'fig');
@@ -1047,6 +1054,6 @@ legend({'Active Line Losses (kW)','Transformer Reactive Losses (kVAr)', 'Reactiv
 % TransformerLoadingFig.PaperPosition = [0 0 3 2.5];
 % print(TransformerLoadingFig, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Loading_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
 
-LossesFigure.PaperUnits = 'inches';
-LossesFigure.PaperPosition = [0 0 3 2.5];
-print(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Line_Losses_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');
+% LossesFigure.PaperUnits = 'inches';
+% LossesFigure.PaperPosition = [0 0 3 2.5];
+% print(LossesFigure, ['C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\Plots\Non-interactive Plots (PNG)\Transformer_Line_Losses_VS_Time_' sprintf(Scenario,ID1,ID2,ID3,Season) '.png'], '-dpng','-r600');

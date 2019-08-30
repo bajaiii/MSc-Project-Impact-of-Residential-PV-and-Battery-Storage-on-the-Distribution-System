@@ -277,11 +277,11 @@ DSSText.command = 'batchedit storage..* Vmaxpu=1.15 Vminpu=0.85';
 
 %%% User can manually change  the max rated energy storage capacity rating for all battery
 %%% elements in the circuit by uncommenting the next line
-% DSSText.command = 'batchedit storage..* kWhRated=20'; 
+% DSSText.command = 'batchedit storage..* kWhRated=50'; 
 % 
 %%% User can manually change  the maximum power rating for all battery
 %%% elements in the circuit by uncommenting the next line
-% DSSText.command = 'batchedit storage..* kWRated=10'; 
+% DSSText.command = 'batchedit storage..* kWRated=20'; 
 
 % No storage reserve (i.e does not begin charging when storage hits the
 % reserve %) for any storage element and defines the intial state of charge for all storage elements
