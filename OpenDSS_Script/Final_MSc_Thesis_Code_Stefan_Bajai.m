@@ -19,6 +19,8 @@
 % Step 3. Execute this script. This script will prompt the user which
 % Scenario they wish to replicate
 
+
+
 % For full modelling methodology, please see Thesis report which can also
 % be found on the repositiory listed above in PDF format. 
 
@@ -159,11 +161,16 @@ end
 DSSCircuit = DSSObj.ActiveCircuit;
 DSSSolution = DSSCircuit.Solution;
 
+% % If an error appears saying dss files can't be found, uncomment the next
+% % line and enter the path which the simulation files are in
+% DSSText.command = 'Set DataPath = C:\Users\bajai\Documents\GitHub\MSc-Project---Impact-of-PV-and-Battery-Storage-on-Distribution-System\OpenDSSScript'
+
 %% Development of IEEE European LV Test Feeder Circuit in OpenDSS Using the COM interface
 
 DSSText.command = 'clearall'; % Clears all variables in OpenDSS engine
 DSSText.command = 'clear'; % Clears all variables in OpenDSS engine
 DSSText.command = 'Set DefaultBaseFrequency = 50'; % Sets UK grid frequency
+
 DSSText.command = 'New circuit.MastersThesis_StefanBajai_IEEE_TestFeeder'; %Gives circuit a name
 % DSSText.command = 'set algorithm=newton';  % Changes solution method
 % (default is fixed point iterative method)
