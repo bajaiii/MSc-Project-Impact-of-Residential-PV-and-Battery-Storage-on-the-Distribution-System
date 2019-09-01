@@ -27,6 +27,6 @@ OpenDSS can be downloaded from: **https://sourceforge.net/p/electricdss/wiki/Hom
 
 **Step 4:** Inspect the results. 
 
-**Note:** Sometimes OpenDSS fails to find the directory where the simulation files are stored (load profiles, generator definitions, network definitions etc.). If this occurs please uncomment Line 164 in the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' script and enter the location of the folder downloaded in Step 2.
+**Note:** Sometimes OpenDSS fails to find the directory where the simulation files are stored (load profiles, generator definitions, network definitions etc.). If this occurs please uncomment Line 169 in the '*Final_MSc_Thesis_Code_Stefan_Bajai.m*' script and enter the location of the folder downloaded in Step 2.
 
 
